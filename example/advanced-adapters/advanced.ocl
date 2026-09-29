@@ -1,0 +1,2 @@
+context Library inv QualifiedLookup: self.books['A']->notEmpty()
+context Library inv HasLoan: self.Loan->notEmpty()

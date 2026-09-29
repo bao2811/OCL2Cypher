@@ -1,0 +1,15 @@
+{"plugins": [],
+ "package": "Ocl2CypherProof",
+ "options": {},
+ "name": "Ocl2CypherProof",
+ "isModule": false,
+ "importArts":
+ {"SemanticTypes":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\SemanticTypes.olean"],
+  "ExtensionalNestedSet":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\ExtensionalNestedSet.olean"],
+  "CaseStudyVerticalSlices":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\CaseStudyVerticalSlices.olean"],
+  "CanonicalScalarCodec":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\CanonicalScalarCodec.olean"]},
+ "dynlibs": []}

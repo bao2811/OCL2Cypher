@@ -1,0 +1,16 @@
+!new Catalog('catalog1')
+!set catalog1.name := 'Main -- catalog'
+
+!new Item('item1')
+!set item1.name := 'Book'
+!set item1.active := true
+!set item1.price := 12.5
+
+!insert (catalog1, item1) into CatalogItems
+
+!new Item('item1')
+!set item1.name := 'Magazine'
+!set item1.active := false
+!set item1.price := 7.99
+
+!insert (catalog1, item1) into CatalogItems

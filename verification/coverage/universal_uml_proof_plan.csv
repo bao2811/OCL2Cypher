@@ -1,0 +1,10 @@
+phase,scope,primary_artifact,exit_theorem,discharges,status
+U0,certified structural UML profile,verification/lean/Ocl2Cypher/Uml/Profile.lean,decideCertifiedProfile_iff,scope ambiguity,DESIGNED
+U1,parametric schema instance and validity,verification/lean/Ocl2Cypher/Uml/Validity.lean,decideValidUmlModel_iff,well-formed-model premise,DESIGNED
+U2,arbitrary-depth typed values and codec,verification/lean/Ocl2Cypher/Graph/Codec.lean,decode_encode_tau and encode_injective_tau,BR codec core,DESIGNED
+U3,logical graph encoder and arbitrary-arity links,verification/lean/Ocl2Cypher/Graph/Encoder.lean,encodeLogical_graphWF,GraphAdequate R1-R7 ID injectivity,DESIGNED
+U4,typed object and graph NVA evaluation,verification/lean/Ocl2Cypher/Graph/GraphEval.lean,typedNva_eval_encode,iterator and encoder agreement,DESIGNED
+U5,typed 26-constructor NVA to CQM lowering,verification/lean/Ocl2Cypher/Cqm/Lowering.lean,nva_to_cqm_sound,LR and NVA26,DESIGNED
+U6,typed CQM to Raw lowering and formal Raw evaluation,verification/lean/Ocl2Cypher/Raw/Lowering.lean,cqm_to_raw_sound,CY C BR ParamCorr AliasFresh,DESIGNED
+U7,invariant wrapper and exact observation,verification/lean/Ocl2Cypher/UniversalTheorem.lean,ocl_to_cypher_universal and universal_noGhost,T6 and NoGhost,DESIGNED
+U8,production translation certificate,verification/lean/Ocl2Cypher/Certificate/Checker.lean,certificate_acceptance_sound,Java16 production refinement,DESIGNED

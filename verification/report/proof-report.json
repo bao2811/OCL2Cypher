@@ -1,0 +1,113 @@
+{
+    "schema":  "proof-report.schema.v1",
+    "proofContract":  "PC-2026-07-22.3",
+    "registrySchemaVersion":  4,
+    "registrySha256":  "87717c14029b0ce04ee012225963778e0f070a2f8df3dd9ea248b089b12e1f9a",
+    "sourceRevision":  "918dafdb57ca0e63725f3b4e07ffc4ec3008e53f",
+    "verificationGate":  {
+                             "result":  "NOT_RUN",
+                             "meaning":  "report generated without asserting execution of the complete gate"
+                         },
+    "claim":  {
+                  "prototypeCorrectness":  "conditional",
+                  "blockingObligations":  [
+                                              "PO-15",
+                                              "PO-16",
+                                              "PO-18",
+                                              "PO-21",
+                                              "PO-22",
+                                              "PO-23"
+                                          ]
+              },
+    "obligations":  {
+                        "total":  24,
+                        "discharged":  17,
+                        "partial":  6,
+                        "open":  1,
+                        "outOfScope":  1
+                    },
+    "mechanization":  {
+                          "framework":  "Lean",
+                          "version":  "4.32.2",
+                          "requiredTheorems":  32,
+                          "recordedEvidenceAt":  "2026-08-09T21:07:46+07:00",
+                          "recordedKernel":  "PASS",
+                          "recordedMutationsKilled":  "6/6",
+                          "allowedCoreAxioms":  [
+                                                    "propext",
+                                                    "Quot.sound"
+                                                ],
+                          "coverage":  [
+                                           {
+                                               "id":  "MK-FINITE-SET",
+                                               "status":  "mechanized",
+                                               "scope":  "predicate-set image/subset/exists/forall and injective membership reflection"
+                                           },
+                                           {
+                                               "id":  "MK-LIFT1",
+                                               "status":  "mechanized",
+                                               "scope":  "axiom-free absent-to-empty and present-to-singleton agreement among source, Bound, and validation-algebra collection views, including the asSet, size, isEmpty, and notEmpty observations admitted for scalar to-one receivers"
+                                           },
+                                           {
+                                               "id":  "MK-ENCODE",
+                                               "status":  "mechanized",
+                                               "scope":  "flat typed bottom/scalar/entity/finite-set value encoding"
+                                           },
+                                           {
+                                               "id":  "MK-NORMALIZE",
+                                               "status":  "partial",
+                                               "scope":  "all eleven listed rewrite-family semantic equations over validation Bool/finite List, intrinsic Bool/Nat/Elem/Set N2 indexes, lexical named-to-de-Bruijn semantic correspondence, soundness and scoped-semantic preservation of the exact three-disjunct Java capture guard over the Boolean binder kernel, relative normal form, idempotence, and lexicographic root decrease; concrete semantic premises for every production optimization rule remain open"
+                                           },
+                                           {
+                                               "id":  "MK-T4",
+                                               "status":  "mechanized",
+                                               "scope":  "payload-parametric relational structural induction over all 16 production OclIr.OptimizedExpression constructors, including sourceCollectionType on collection and iterator operations, every other non-recursive record payload, recursive expression lists, and optional predicates, under one explicit primitive-agreement premise per constructor"
+                                           },
+                                           {
+                                               "id":  "MK-BOUND-VA",
+                                               "status":  "mechanized",
+                                               "scope":  "axiom-free recursive evaluation equality for the alpha abstraction from all eleven production BoundExpression record families, with BoundProperty split into the twelve SemanticExpression targets and every sourceCollectionType payload retained, under an arbitrary shared primitive algebra"
+                                           },
+                                           {
+                                               "id":  "MK-PA-COMP",
+                                               "status":  "mechanized",
+                                               "scope":  "six AdapterAdequate observation equalities derived from exact-M2 and PA1--PA9 over one explicit shared source/graph snapshot premise"
+                                           },
+                                           {
+                                               "id":  "MK-T6",
+                                               "status":  "mechanized",
+                                               "scope":  "forward/backward pointwise violation-ID inclusions under agreement and ID injectivity"
+                                           }
+                                       ],
+                          "openScope":  [
+                                            "nested collection encodeValue injectivity",
+                                            "metamodel-specific OCL subtyping/coercion and concrete semantic agreement for every Java T_OPT normalization rule",
+                                            "instantiation of the 16-constructor relational algebra with the actual object and graph evaluators, including Java payload semantics",
+                                            "Neo4j/Cypher semantics beyond the selected runtime-profile assumptions and non-invariant/fallback entry points",
+                                            "universal Theorem 6 composition beyond the abstract agreement premises"
+                                        ]
+                      },
+    "implementation":  {
+                           "recordedEvidenceAt":  "2026-08-09T21:07:46+07:00",
+                           "admittedConstructors":  47,
+                           "recordedConformanceTests":  311,
+                           "recordedConformanceFailures":  0,
+                           "recordedCompilerMutationScore":  "20/20",
+                           "recordedNeo4jParserTrees":  "52/52"
+                       },
+    "runtime":  {
+                    "profile":  "RP-NEO4J-2026.06-CYPHER5-CANONICAL-V1",
+                    "serverVersion":  "2026.06.0",
+                    "cypherVersion":  "5",
+                    "recordedEvidenceAt":  "2026-08-09T19:26:30+07:00",
+                    "cypherAssumptionRowsPassed":  "9/9",
+                    "differentialEquivalent":  "47/47",
+                    "scope":  "recorded fixture/runtime profile only; not universal Neo4j semantics"
+                },
+    "publication":  {
+                        "paperPublication":  "external-local-only",
+                        "includedInMachineGate":  false,
+                        "sourceFormat":  "local-ignored-tex",
+                        "ciArtifactIsCorrectnessEvidence":  false
+                    }
+}

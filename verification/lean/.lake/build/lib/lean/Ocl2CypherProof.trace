@@ -1,0 +1,169 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs":
+ {"o": ["d988bf165ce181f7.olean"],
+  "m": false,
+  "i": "24a644e92c3a66d6.ilean",
+  "c": "95f2e2ab5f390fe3.c"},
+ "log":
+ [{"message":
+   ".> LEAN_PATH=G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean c:\\Users\\Admin\\.elan\\toolchains\\leanprover--lean4---v4.32.2\\bin\\lean.exe G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2CypherProof.lean -o G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2CypherProof.olean -i G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2CypherProof.ilean -c G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2CypherProof.c --setup G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2CypherProof.setup.json --json",
+   "level": "trace"},
+  {"message":
+   "Ocl2CypherProof.lean:2230:0: 'Ocl2CypherProof.encodeValue_injective' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2231:0: 'Ocl2CypherProof.ConcreteOclTyping.classConforms_trans' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2232:0: 'Ocl2CypherProof.ConcreteOclTyping.set_conformance_is_covariant' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2233:0: 'Ocl2CypherProof.ConcreteOclTyping.decideConforms_iff' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2234:0: 'Ocl2CypherProof.ConcreteOclTyping.extractedHierarchy_decideConforms_iff' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2235:0: 'Ocl2CypherProof.NestedEncoding.nested_decode_encode_value' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2236:0: 'Ocl2CypherProof.NestedEncoding.nested_encodeValue_injective' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2237:0: 'Ocl2CypherProof.extensional_nested_encodeValue_injective' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2238:0: 'Ocl2CypherProof.extensional_nested_encode_preserves_finiteness' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2239:0: 'Ocl2CypherProof.extensional_nested_payload_encode_injective' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2240:0: 'Ocl2CypherProof.extensional_nested_payload_encode_preserves_finiteness' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2241:0: 'Ocl2CypherProof.canonical_scalar_codec_injective' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2242:0: 'Ocl2CypherProof.canonical_scalar_escape_injective' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2243:0: 'Ocl2CypherProof.extensional_nested_canonical_payload_encode_injective' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2244:0: 'Ocl2CypherProof.ToOneLift.lift1_consumer_agreement' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2245:0: 'Ocl2CypherProof.BoolExpr.normalize_preserves_eval' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2246:0: 'Ocl2CypherProof.BoolExpr.normalize_reaches_redex_free' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2247:0: 'Ocl2CypherProof.Formula.structural_preservation' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2248:0: 'Ocl2CypherProof.JavaIrRefinement.java_ir_eval_refinement' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2249:0: 'Ocl2CypherProof.JavaIrRefinement.prod_plan_sim_sound' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2250:0: 'Ocl2CypherProof.SpecificationPlanRefinement.certified_nva_grammar_complete' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2251:0: 'Ocl2CypherProof.SpecificationPlanRefinement.spec_plan_sim_sound' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2252:0: 'Ocl2CypherProof.BoundVaAbstraction.bound_va_abstraction' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2253:0: 'Ocl2CypherProof.AdapterComposition.pa_comp' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2254:0: 'Ocl2CypherProof.theorem6_at_object' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2255:0: 'Ocl2CypherProof.case_study_entity_id_injective' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2256:0: 'Ocl2CypherProof.nested_sequence_payload_injective' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2257:0: 'Ocl2CypherProof.nested_sequence_preserves_width' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2258:0: 'Ocl2CypherProof.nested_sequence_preserves_inner_widths' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2259:0: 'Ocl2CypherProof.nested_scalar_bottom_separated' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2260:0: 'Ocl2CypherProof.nary_projection_agreement' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2261:0: 'Ocl2CypherProof.nary_projection_noGhost' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2262:0: 'Ocl2CypherProof.nested_entity_noGhost' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2263:0: 'Ocl2CypherProof.Normalization.all_rewrite_semantics' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2264:0: 'Ocl2CypherProof.Normalization.typed_rewrite_preserves_type' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2265:0: 'Ocl2CypherProof.Normalization.Scoped.scoped_rename_preserves_binder_boundary' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2266:0: 'Ocl2CypherProof.Normalization.NamedBridge.named_to_scoped_semantic_correspondence' depends on axioms: [propext,\n Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2267:0: 'Ocl2CypherProof.Normalization.NamedBridge.java_capture_guard_sound' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2268:0: 'Ocl2CypherProof.Normalization.NamedBridge.java_guarded_rename_preserves_scoped_semantics' depends on axioms: [propext,\n Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2269:0: 'Ocl2CypherProof.Normalization.RewriteExpr.normalize_reaches_normal_form' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2270:0: 'Ocl2CypherProof.Normalization.RewriteExpr.normalize_idempotent' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2CypherProof.lean:2271:0: 'Ocl2CypherProof.Normalization.RewriteExpr.RootRule.root_rewrite_strictly_decreases' depends on axioms: [propext]",
+   "level": "info"}],
+ "inputs":
+ [["Ocl2CypherProof:deps",
+   [["deps",
+     [["Ocl2CypherProof/Ocl2CypherProof:extraDep",
+       [["@Ocl2CypherProof:extraDep", "00000000000006bb"]]],
+      ["imports",
+       [["SemanticTypes transitive imports (legacy)", "00000000000006bb"],
+        ["SemanticTypes:importAllArts", "ce58d9b281d48451"],
+        ["ExtensionalNestedSet transitive imports (legacy)",
+         "00000000000006bb"],
+        ["ExtensionalNestedSet:importAllArts", "82e6db7fdfa4c2b4"],
+        ["CanonicalScalarCodec transitive imports (legacy)",
+         "00000000000006bb"],
+        ["CanonicalScalarCodec:importAllArts", "9c7f93faa0781848"],
+        ["CaseStudyVerticalSlices transitive imports (legacy)",
+         "e771f975d884ef35"],
+        ["CaseStudyVerticalSlices:importAllArts", "3adc041b5ac67054"]]]]],
+    ["libs",
+     [["import dynlibs", "00000000000006bb"],
+      ["package external libraries", "00000000000006bb"],
+      ["module dynlibs", "00000000000006bb"],
+      ["module plugins", "00000000000006bb"]]]]],
+  ["Lean 4.32.2, commit f3b06c705e6c85f5314019d5d3baab0fec5b580c",
+   "7508232886a2752a"],
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2CypherProof.lean",
+   "4931b09494075d3e"],
+  ["options", "00000000000006bb"],
+  ["isModule: false", "feefd2a0d3a1847e"],
+  ["Module.name: Ocl2CypherProof", "7e82440f07036c10"],
+  ["Package.id?: (some Ocl2CypherProof)", "957a07e6278a3948"],
+  ["Module.leanArgs: #[]", "00000000000006bb"]],
+ "depHash": "5168a3111e9ec9ac"}

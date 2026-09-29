@@ -1,0 +1,3 @@
+[submodule "Isabelle-HolIsL"]
+	path = Isabelle-HolIsL
+	url = https://github.com/qbert0/Isabelle-HolIsL.git

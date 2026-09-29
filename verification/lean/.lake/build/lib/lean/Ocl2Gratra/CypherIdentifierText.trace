@@ -1,0 +1,75 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs":
+ {"o": ["c4c62c796f9ab5ba.olean"],
+  "m": false,
+  "i": "9a2e7f21335a0919.ilean",
+  "c": "76f0d64948f4ad5e.c"},
+ "log":
+ [{"message":
+   ".> LEAN_PATH=G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean g:\\TGG-OCL-Neo4j\\use-neo4j\\_build_lib\\lean-4.32.2\\lean-4.32.2-windows\\bin\\lean.exe G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\CypherIdentifierText.lean -o G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\CypherIdentifierText.olean -i G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\CypherIdentifierText.ilean -c G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\CypherIdentifierText.c --setup G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\CypherIdentifierText.setup.json --json",
+   "level": "trace"},
+  {"message":
+   "Ocl2Gratra/CypherIdentifierText.lean:128:0: 'Ocl2Gratra.CypherIdentifierText.decodeBody_escape' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CypherIdentifierText.lean:129:0: 'Ocl2Gratra.CypherIdentifierText.parsePrefix_quote' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CypherIdentifierText.lean:130:0: 'Ocl2Gratra.CypherIdentifierText.parseExact_quote' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CypherIdentifierText.lean:131:0: 'Ocl2Gratra.CypherIdentifierText.quote_injective' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CypherIdentifierText.lean:132:0: 'Ocl2Gratra.CypherIdentifierText.parseString_quoteString' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CypherIdentifierText.lean:133:0: 'Ocl2Gratra.CypherIdentifierText.quoteString_injective' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CypherIdentifierText.lean:134:0: 'Ocl2Gratra.CypherIdentifierText.parseQId_quoteString' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CypherIdentifierText.lean:135:0: 'Ocl2Gratra.CypherIdentifierText.parseQId_rejects_empty' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CypherIdentifierText.lean:136:0: 'Ocl2Gratra.CypherIdentifierText.parseLeaf_variable' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CypherIdentifierText.lean:137:0: 'Ocl2Gratra.CypherIdentifierText.parseLeaf_null' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CypherIdentifierText.lean:138:0: 'Ocl2Gratra.CypherIdentifierText.parseLeaf_true' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CypherIdentifierText.lean:139:0: 'Ocl2Gratra.CypherIdentifierText.parseLeaf_false' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CypherIdentifierText.lean:140:0: 'Ocl2Gratra.CypherIdentifierText.parseLeaf_rejects_unterminated' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]",
+   "level": "info"}],
+ "inputs":
+ [["Ocl2Gratra.CypherIdentifierText:deps",
+   [["deps",
+     [["Ocl2CypherProof/Ocl2Gratra:extraDep",
+       [["@Ocl2CypherProof:extraDep", "00000000000006bb"]]],
+      ["imports",
+       [["Ocl2Gratra.CypherCanonicalGrammar transitive imports (legacy)",
+         "00000000000006bb"],
+        ["Ocl2Gratra.CypherCanonicalGrammar:importAllArts",
+         "bc424cf3c0b5e96c"]]]]],
+    ["libs",
+     [["import dynlibs", "00000000000006bb"],
+      ["package external libraries", "00000000000006bb"],
+      ["module dynlibs", "00000000000006bb"],
+      ["module plugins", "00000000000006bb"]]]]],
+  ["Lean 4.32.2, commit f3b06c705e6c85f5314019d5d3baab0fec5b580c",
+   "7508232886a2752a"],
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\CypherIdentifierText.lean",
+   "54ee8d90a961e427"],
+  ["options", "00000000000006bb"],
+  ["isModule: false", "feefd2a0d3a1847e"],
+  ["Module.name: Ocl2Gratra.CypherIdentifierText", "9e441ae0ee8757b8"],
+  ["Package.id?: (some Ocl2CypherProof)", "957a07e6278a3948"],
+  ["Module.leanArgs: #[]", "00000000000006bb"]],
+ "depHash": "35df124346af5711"}

@@ -1,0 +1,8 @@
+model UnsupportedContracts
+
+class Person
+end
+
+constraints
+context Person::rename(name : String)
+pre ValidName: name <> ''

@@ -1,0 +1,6 @@
+!new Library('library1')
+!new Book('book1')
+!insert (library1{'A'}, book1) into Catalog
+!insert (library1, book1{'X'}) into Ownership
+!new Loan('loan1') between (library1, book1)
+!set loan1.note := 'overnight'

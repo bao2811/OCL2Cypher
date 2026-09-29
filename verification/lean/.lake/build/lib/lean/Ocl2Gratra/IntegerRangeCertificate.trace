@@ -1,0 +1,68 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs":
+ {"o": ["2c4933b947a8730a.olean"],
+  "m": false,
+  "i": "5f069acf4f91328c.ilean",
+  "c": "c283eca3f73d9ac2.c"},
+ "log":
+ [{"message":
+   ".> LEAN_PATH=G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean c:\\Users\\Admin\\.elan\\toolchains\\leanprover--lean4---v4.32.2\\bin\\lean.exe G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\IntegerRangeCertificate.lean -o G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\IntegerRangeCertificate.olean -i G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\IntegerRangeCertificate.ilean -c G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\IntegerRangeCertificate.c --setup G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\IntegerRangeCertificate.setup.json --json",
+   "level": "trace"},
+  {"message":
+   "Ocl2Gratra/IntegerRangeCertificate.lean:206:0: 'Ocl2Gratra.IntegerRangeCertificate.contained_in_native_safe_is_int64' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/IntegerRangeCertificate.lean:207:0: 'Ocl2Gratra.IntegerRangeCertificate.add_range_sound' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/IntegerRangeCertificate.lean:208:0: 'Ocl2Gratra.IntegerRangeCertificate.certified_add_is_int64' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/IntegerRangeCertificate.lean:209:0: 'Ocl2Gratra.IntegerRangeCertificate.sub_range_sound' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/IntegerRangeCertificate.lean:210:0: 'Ocl2Gratra.IntegerRangeCertificate.certified_sub_is_int64' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/IntegerRangeCertificate.lean:211:0: 'Ocl2Gratra.IntegerRangeCertificate.negate_range_sound' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/IntegerRangeCertificate.lean:212:0: 'Ocl2Gratra.IntegerRangeCertificate.certified_negate_is_int64' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/IntegerRangeCertificate.lean:213:0: 'Ocl2Gratra.IntegerRangeCertificate.int64_min_negation_is_not_int64' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/IntegerRangeCertificate.lean:214:0: 'Ocl2Gratra.IntegerRangeCertificate.singleton_exact' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/IntegerRangeCertificate.lean:215:0: 'Ocl2Gratra.IntegerRangeCertificate.checked_add_sound' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/IntegerRangeCertificate.lean:216:0: 'Ocl2Gratra.IntegerRangeCertificate.checked_sum_aux_sound' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/IntegerRangeCertificate.lean:217:0: 'Ocl2Gratra.IntegerRangeCertificate.checked_sum_sound' depends on axioms: [propext, Quot.sound]",
+   "level": "info"}],
+ "inputs":
+ [["Ocl2Gratra.IntegerRangeCertificate:deps",
+   [["deps",
+     [["Ocl2CypherProof/Ocl2Gratra:extraDep",
+       [["@Ocl2CypherProof:extraDep", "00000000000006bb"]]],
+      ["imports", "00000000000006bb"]]],
+    ["libs",
+     [["import dynlibs", "00000000000006bb"],
+      ["package external libraries", "00000000000006bb"],
+      ["module dynlibs", "00000000000006bb"],
+      ["module plugins", "00000000000006bb"]]]]],
+  ["Lean 4.32.2, commit f3b06c705e6c85f5314019d5d3baab0fec5b580c",
+   "7508232886a2752a"],
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\IntegerRangeCertificate.lean",
+   "631632cb1ea9b82b"],
+  ["options", "00000000000006bb"],
+  ["isModule: false", "feefd2a0d3a1847e"],
+  ["Module.name: Ocl2Gratra.IntegerRangeCertificate", "1e452d338c95da70"],
+  ["Package.id?: (some Ocl2CypherProof)", "957a07e6278a3948"],
+  ["Module.leanArgs: #[]", "00000000000006bb"]],
+ "depHash": "7d632e0b8c98ce0f"}

@@ -1,0 +1,23 @@
+model Shop
+
+class Catalog
+attributes
+    name : String
+end
+
+class Item
+attributes
+    name : String
+    active : Boolean
+    price : Real
+end
+
+association CatalogItems between
+    Catalog[1] role catalog
+    Item[*] role items
+end
+
+constraints
+context Catalog
+inv HasItems:
+    self.items->notEmpty()

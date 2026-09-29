@@ -1,0 +1,7 @@
+# Isabelle build artifacts (user-local, not checked into the public repo)
+/heaps/
+/output/
+/session_graph/
+*.heap
+*~bak
+*~restore

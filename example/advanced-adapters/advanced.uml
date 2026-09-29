@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML"
+    xmi:id="advanced-model" name="Advanced">
+  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="string-type" name="String"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="library-class" name="Library"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="book-class" name="Book"/>
+  <packagedElement xmi:type="uml:Association" xmi:id="catalog-association"
+      name="Catalog" memberEnd="library-end books-end">
+    <ownedEnd xmi:id="library-end" name="library" type="library-class"
+        lower="0" upper="*"/>
+    <ownedEnd xmi:id="books-end" name="books" type="book-class"
+        lower="0" upper="*">
+      <qualifier xmi:id="shelf-qualifier" name="shelf" type="string-type"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:AssociationClass" xmi:id="loan-class"
+      name="Loan" memberEnd="lender-end borrowed-end">
+    <ownedEnd xmi:id="lender-end" name="lender" type="library-class"
+        lower="0" upper="*"/>
+    <ownedEnd xmi:id="borrowed-end" name="borrowedBook" type="book-class"
+        lower="0" upper="*"/>
+    <ownedAttribute xmi:id="loan-note" name="note" type="string-type"/>
+  </packagedElement>
+</uml:Model>

@@ -1,0 +1,15 @@
+# Corpus fingerprints are SHA-256 checked in BaselineManifestTest.java.
+# These files MUST be checked out byte-identical to the recorded baseline,
+# so force LF line endings regardless of core.autocrlf.
+ocl2cypher/src/test/resources/precedence-corpus.ocl   -text
+ocl2cypher/src/test/resources/grammar-conformance.tsv -text
+ocl2cypher/src/test/resources/expected-precedence-trees.json -text
+
+# Everything else: keep repo's LF and let git convert on Windows checkout.
+* text=auto eol=lf
+
+# Binary artifacts
+*.png binary
+*.pdf binary
+*.jar binary
+*.class binary

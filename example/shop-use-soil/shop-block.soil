@@ -1,0 +1,22 @@
+\
+!begin
+  declare c : Catalog, i : Item, discarded : Item, n : Integer;
+  c := new Catalog('catalog1');
+  c.name := 'Main';
+  i := new Item('item1');
+  i.name := 'Book';
+  i.active := true;
+  i.price := 12.5;
+  insert (c, i) into CatalogItems;
+  delete (c, i) from CatalogItems;
+  insert (c, i) into CatalogItems;
+  discarded := new Item('discarded');
+  destroy discarded;
+  n := 0;
+  while n < 1 do
+    i.name := i.name.concat('!');
+    n := n + 1
+  end;
+  if not i.active then i.name := 'wrong branch' end
+end
+.

@@ -1,0 +1,32 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs":
+ {"o": ["559e2414dd6c056f.olean"],
+  "m": false,
+  "i": "eb0e1958a2a87234.ilean",
+  "c": "01b0b6e8dc9efc6d.c"},
+ "log":
+ [{"message":
+   ".> LEAN_PATH=G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean c:\\Users\\Admin\\.elan\\toolchains\\leanprover--lean4---v4.32.2\\bin\\lean.exe G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\..\\..\\neo4j-tgg\\lean\\CanonicalScalarCodec.lean -o G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\CanonicalScalarCodec.olean -i G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\CanonicalScalarCodec.ilean -c G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\CanonicalScalarCodec.c --setup G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\CanonicalScalarCodec.setup.json --json",
+   "level": "trace"}],
+ "inputs":
+ [["CanonicalScalarCodec:deps",
+   [["deps",
+     [["Ocl2CypherProof/Ocl2CypherSupport:extraDep",
+       [["@Ocl2CypherProof:extraDep", "00000000000006bb"]]],
+      ["imports", "00000000000006bb"]]],
+    ["libs",
+     [["import dynlibs", "00000000000006bb"],
+      ["package external libraries", "00000000000006bb"],
+      ["module dynlibs", "00000000000006bb"],
+      ["module plugins", "00000000000006bb"]]]]],
+  ["Lean 4.32.2, commit f3b06c705e6c85f5314019d5d3baab0fec5b580c",
+   "7508232886a2752a"],
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\..\\..\\neo4j-tgg\\lean\\CanonicalScalarCodec.lean",
+   "09e914b2d012362b"],
+  ["options", "00000000000006bb"],
+  ["isModule: false", "feefd2a0d3a1847e"],
+  ["Module.name: CanonicalScalarCodec", "b48edd44283cceb1"],
+  ["Package.id?: (some Ocl2CypherProof)", "957a07e6278a3948"],
+  ["Module.leanArgs: #[]", "00000000000006bb"]],
+ "depHash": "100cec9b12551c20"}

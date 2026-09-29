@@ -1,0 +1,50 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs":
+ {"o": ["13505959fd8b13ba.olean"],
+  "m": false,
+  "i": "d17e3a8c6a45b1a7.ilean",
+  "c": "6966842a8d73c370.c"},
+ "log":
+ [{"message":
+   ".> LEAN_PATH=G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean c:\\Users\\Admin\\.elan\\toolchains\\leanprover--lean4---v4.32.2\\bin\\lean.exe G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\OclTypeLattice.lean -o G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\OclTypeLattice.olean -i G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\OclTypeLattice.ilean -c G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\OclTypeLattice.c --setup G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\OclTypeLattice.setup.json --json",
+   "level": "trace"},
+  {"message":
+   "Ocl2Gratra/OclTypeLattice.lean:258:0: 'Ocl2Gratra.OclTypeLattice.class_conforms_trans' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/OclTypeLattice.lean:259:0: 'Ocl2Gratra.OclTypeLattice.conforms_with_refl' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/OclTypeLattice.lean:260:0: 'Ocl2Gratra.OclTypeLattice.conforms_with_trans' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/OclTypeLattice.lean:261:0: 'Ocl2Gratra.OclTypeLattice.exact_type_implies_kind_of' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/OclTypeLattice.lean:262:0: 'Ocl2Gratra.OclTypeLattice.set_inheritance_covariant' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/OclTypeLattice.lean:263:0: 'Ocl2Gratra.OclTypeLattice.bag_inheritance_covariant' depends on axioms: [propext]",
+   "level": "info"}],
+ "inputs":
+ [["Ocl2Gratra.OclTypeLattice:deps",
+   [["deps",
+     [["Ocl2CypherProof/Ocl2Gratra:extraDep",
+       [["@Ocl2CypherProof:extraDep", "00000000000006bb"]]],
+      ["imports", "00000000000006bb"]]],
+    ["libs",
+     [["import dynlibs", "00000000000006bb"],
+      ["package external libraries", "00000000000006bb"],
+      ["module dynlibs", "00000000000006bb"],
+      ["module plugins", "00000000000006bb"]]]]],
+  ["Lean 4.32.2, commit f3b06c705e6c85f5314019d5d3baab0fec5b580c",
+   "7508232886a2752a"],
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\OclTypeLattice.lean",
+   "048929146b4c087c"],
+  ["options", "00000000000006bb"],
+  ["isModule: false", "feefd2a0d3a1847e"],
+  ["Module.name: Ocl2Gratra.OclTypeLattice", "acac51dbf485579c"],
+  ["Package.id?: (some Ocl2CypherProof)", "957a07e6278a3948"],
+  ["Module.leanArgs: #[]", "00000000000006bb"]],
+ "depHash": "72d6ab5b1e7311ce"}

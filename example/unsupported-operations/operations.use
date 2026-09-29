@@ -1,0 +1,6 @@
+model UnsupportedOperations
+
+class Person
+operations
+    rename(name : String)
+end

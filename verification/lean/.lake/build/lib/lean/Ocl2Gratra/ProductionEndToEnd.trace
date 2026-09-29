@@ -1,0 +1,53 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs":
+ {"o": ["a8b5926b9ffd6cc2.olean"],
+  "m": false,
+  "i": "5a3f202ab5b4bd93.ilean",
+  "c": "ff423812e45442d1.c"},
+ "log":
+ [{"message":
+   ".> LEAN_PATH=G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean c:\\Users\\Admin\\.elan\\toolchains\\leanprover--lean4---v4.32.2\\bin\\lean.exe G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\ProductionEndToEnd.lean -o G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\ProductionEndToEnd.olean -i G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\ProductionEndToEnd.ilean -c G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\ProductionEndToEnd.c --setup G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\ProductionEndToEnd.setup.json --json",
+   "level": "trace"},
+  {"message":
+   "Ocl2Gratra/ProductionEndToEnd.lean:156:0: 'Ocl2Gratra.ProductionEndToEnd.no_extra_identifiers' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/ProductionEndToEnd.lean:157:0: 'Ocl2Gratra.ProductionEndToEnd.no_missing_identifiers' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/ProductionEndToEnd.lean:158:0: 'Ocl2Gratra.ProductionEndToEnd.returned_iff_source_violation' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/ProductionEndToEnd.lean:159:0: 'Ocl2Gratra.ProductionEndToEnd.exact_violation_identifier_set' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/ProductionEndToEnd.lean:160:0: 'Ocl2Gratra.ProductionEndToEnd.executor_violation_corollary' does not depend on any axioms",
+   "level": "info"}],
+ "inputs":
+ [["Ocl2Gratra.ProductionEndToEnd:deps",
+   [["deps",
+     [["Ocl2CypherProof/Ocl2Gratra:extraDep",
+       [["@Ocl2CypherProof:extraDep", "00000000000006bb"]]],
+      ["imports",
+       [["Ocl2Gratra.Boolean3Kleene transitive imports (legacy)",
+         "00000000000006bb"],
+        ["Ocl2Gratra.Boolean3Kleene:importAllArts", "b44f4a99e1d983c1"],
+        ["Ocl2Gratra.ProductionQSyntax transitive imports (legacy)",
+         "5681a9606a91376a"],
+        ["Ocl2Gratra.ProductionQSyntax:importAllArts", "22612faecde2b423"]]]]],
+    ["libs",
+     [["import dynlibs", "00000000000006bb"],
+      ["package external libraries", "00000000000006bb"],
+      ["module dynlibs", "00000000000006bb"],
+      ["module plugins", "00000000000006bb"]]]]],
+  ["Lean 4.32.2, commit f3b06c705e6c85f5314019d5d3baab0fec5b580c",
+   "7508232886a2752a"],
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\ProductionEndToEnd.lean",
+   "4a1657fe34f9305b"],
+  ["options", "00000000000006bb"],
+  ["isModule: false", "feefd2a0d3a1847e"],
+  ["Module.name: Ocl2Gratra.ProductionEndToEnd", "d33c74068cf147c6"],
+  ["Package.id?: (some Ocl2CypherProof)", "957a07e6278a3948"],
+  ["Module.leanArgs: #[]", "00000000000006bb"]],
+ "depHash": "878886fbee835434"}

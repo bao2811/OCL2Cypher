@@ -1,0 +1,56 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs":
+ {"o": ["6002530435839c0e.olean"],
+  "m": false,
+  "i": "a5d3dcac9c1e5ca9.ilean",
+  "c": "af45db12d5e35250.c"},
+ "log":
+ [{"message":
+   ".> LEAN_PATH=G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean c:\\Users\\Admin\\.elan\\toolchains\\leanprover--lean4---v4.32.2\\bin\\lean.exe G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\AdmittedPipeline.lean -o G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\AdmittedPipeline.olean -i G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\AdmittedPipeline.ilean -c G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\AdmittedPipeline.c --setup G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\AdmittedPipeline.setup.json --json",
+   "level": "trace"},
+  {"message":
+   "Ocl2Gratra/AdmittedPipeline.lean:365:0: 'Ocl2Gratra.AdmittedPipeline.normalization_preserves_denotation' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/AdmittedPipeline.lean:366:0: 'Ocl2Gratra.AdmittedPipeline.core_to_q_preserves_denotation' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/AdmittedPipeline.lean:367:0: 'Ocl2Gratra.AdmittedPipeline.realization_succeeds_on_translated_core' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/AdmittedPipeline.lean:368:0: 'Ocl2Gratra.AdmittedPipeline.q_to_formal_cypher_preserves_denotation' depends on axioms: [propext,\n Classical.choice,\n Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/AdmittedPipeline.lean:369:0: 'Ocl2Gratra.AdmittedPipeline.violation_id_preserved' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/AdmittedPipeline.lean:370:0: 'Ocl2Gratra.AdmittedPipeline.exact_violation_ids' does not depend on any axioms",
+   "level": "info"}],
+ "inputs":
+ [["Ocl2Gratra.AdmittedPipeline:deps",
+   [["deps",
+     [["Ocl2CypherProof/Ocl2Gratra:extraDep",
+       [["@Ocl2CypherProof:extraDep", "00000000000006bb"]]],
+      ["imports",
+       [["Ocl2Gratra.Boolean3Kleene transitive imports (legacy)",
+         "00000000000006bb"],
+        ["Ocl2Gratra.Boolean3Kleene:importAllArts", "b44f4a99e1d983c1"],
+        ["Ocl2Gratra.ProductionQSyntax transitive imports (legacy)",
+         "5681a9606a91376a"],
+        ["Ocl2Gratra.ProductionQSyntax:importAllArts", "22612faecde2b423"]]]]],
+    ["libs",
+     [["import dynlibs", "00000000000006bb"],
+      ["package external libraries", "00000000000006bb"],
+      ["module dynlibs", "00000000000006bb"],
+      ["module plugins", "00000000000006bb"]]]]],
+  ["Lean 4.32.2, commit f3b06c705e6c85f5314019d5d3baab0fec5b580c",
+   "7508232886a2752a"],
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\AdmittedPipeline.lean",
+   "dd94fc0e4c93a954"],
+  ["options", "00000000000006bb"],
+  ["isModule: false", "feefd2a0d3a1847e"],
+  ["Module.name: Ocl2Gratra.AdmittedPipeline", "d5ae7f866efb17e7"],
+  ["Package.id?: (some Ocl2CypherProof)", "957a07e6278a3948"],
+  ["Module.leanArgs: #[]", "00000000000006bb"]],
+ "depHash": "6cc3636d695724da"}

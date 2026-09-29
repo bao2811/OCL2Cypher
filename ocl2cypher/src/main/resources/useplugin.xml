@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?use version="3.0.0"?>
+<plugin id="org.uet.dse.ocl2cypher" name="OCL2CypherPlugin" version="7.1.0"
+        publisher="Hoang Quoc Bao" class="org.uet.dse.ocl2cypher.plugin.Main">
+    <actions>
+        <action label="OCL2Cypher"
+                class="org.uet.dse.ocl2cypher.plugin.action.ActionOpenOcl2Cypher"
+                tooltip="Open the OCL2Cypher transformation and verification tool"
+                menu="OCL2Cypher"
+                menuitem="Open Tool"
+                toolbaritem="OCL2Cypher"
+                id="org.uet.dse.ocl2cypher.plugin.action.ActionOpenOcl2Cypher">
+        </action>
+    </actions>
+</plugin>

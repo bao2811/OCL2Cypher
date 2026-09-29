@@ -1,0 +1,50 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs":
+ {"o": ["a88afbdc7fb83bac.olean"],
+  "m": false,
+  "i": "adc79686f521687a.ilean",
+  "c": "cba51c0df2cd14b2.c"},
+ "log":
+ [{"message":
+   ".> LEAN_PATH=G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean c:\\Users\\Admin\\.elan\\toolchains\\leanprover--lean4---v4.32.2\\bin\\lean.exe G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\ProductionQSyntax.lean -o G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\ProductionQSyntax.olean -i G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\ProductionQSyntax.ilean -c G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\ProductionQSyntax.c --setup G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\ProductionQSyntax.setup.json --json",
+   "level": "trace"},
+  {"message":
+   "Ocl2Gratra/ProductionQSyntax.lean:137:0: 'Ocl2Gratra.ProductionQSyntax.expression_inventory_has_twenty' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/ProductionQSyntax.lean:138:0: 'Ocl2Gratra.ProductionQSyntax.plan_inventory_has_seven' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/ProductionQSyntax.lean:139:0: 'Ocl2Gratra.ProductionQSyntax.expression_kind_is_catalogued' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/ProductionQSyntax.lean:140:0: 'Ocl2Gratra.ProductionQSyntax.plan_kind_is_catalogued' depends on axioms: [propext]",
+   "level": "info"}],
+ "inputs":
+ [["Ocl2Gratra.ProductionQSyntax:deps",
+   [["deps",
+     [["Ocl2CypherProof/Ocl2Gratra:extraDep",
+       [["@Ocl2CypherProof:extraDep", "00000000000006bb"]]],
+      ["imports",
+       [["Ocl2Gratra.OclEqualityTotal transitive imports (legacy)",
+         "8dab4db967c994a5"],
+        ["Ocl2Gratra.OclEqualityTotal:importAllArts", "10ddb92adf17795d"],
+        ["Ocl2Gratra.OclTypeLattice transitive imports (legacy)",
+         "00000000000006bb"],
+        ["Ocl2Gratra.OclTypeLattice:importAllArts", "030eb35785eb14e8"]]]]],
+    ["libs",
+     [["import dynlibs", "00000000000006bb"],
+      ["package external libraries", "00000000000006bb"],
+      ["module dynlibs", "00000000000006bb"],
+      ["module plugins", "00000000000006bb"]]]]],
+  ["Lean 4.32.2, commit f3b06c705e6c85f5314019d5d3baab0fec5b580c",
+   "7508232886a2752a"],
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\ProductionQSyntax.lean",
+   "48ca78a21fd676fa"],
+  ["options", "00000000000006bb"],
+  ["isModule: false", "feefd2a0d3a1847e"],
+  ["Module.name: Ocl2Gratra.ProductionQSyntax", "55fd247750199b45"],
+  ["Package.id?: (some Ocl2CypherProof)", "957a07e6278a3948"],
+  ["Module.leanArgs: #[]", "00000000000006bb"]],
+ "depHash": "703f975a807cde5f"}

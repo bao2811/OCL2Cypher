@@ -1,0 +1,56 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs":
+ {"o": ["dcd416e97d918d2b.olean"],
+  "m": false,
+  "i": "67d5f3facdc28a56.ilean",
+  "c": "28feaa07715895eb.c"},
+ "log":
+ [{"message":
+   ".> LEAN_PATH=G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean c:\\Users\\Admin\\.elan\\toolchains\\leanprover--lean4---v4.32.2\\bin\\lean.exe G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\ScalarCodec.lean -o G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\ScalarCodec.olean -i G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\ScalarCodec.ilean -c G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\ScalarCodec.c --setup G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\ScalarCodec.setup.json --json",
+   "level": "trace"},
+  {"message":
+   "Ocl2Gratra/ScalarCodec.lean:146:0: 'Ocl2Gratra.ScalarCodec.decode_encode' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/ScalarCodec.lean:147:0: 'Ocl2Gratra.ScalarCodec.encode_injective' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/ScalarCodec.lean:148:0: 'Ocl2Gratra.ScalarCodec.decode_preserves_type' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/ScalarCodec.lean:149:0: 'Ocl2Gratra.ScalarCodec.bottom_separated_from_defined' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/ScalarCodec.lean:150:0: 'Ocl2Gratra.ScalarCodec.encode_of_decode' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/ScalarCodec.lean:151:0: 'Ocl2Gratra.ScalarCodec.decode_success_iff_well_formed' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/ScalarCodec.lean:152:0: 'Ocl2Gratra.ScalarCodec.encode_decode' depends on axioms: [propext]",
+   "level": "info"}],
+ "inputs":
+ [["Ocl2Gratra.ScalarCodec:deps",
+   [["deps",
+     [["Ocl2CypherProof/Ocl2Gratra:extraDep",
+       [["@Ocl2CypherProof:extraDep", "00000000000006bb"]]],
+      ["imports",
+       [["Ocl2Gratra.OclEqualityTotal transitive imports (legacy)",
+         "8dab4db967c994a5"],
+        ["Ocl2Gratra.OclEqualityTotal:importAllArts", "10ddb92adf17795d"]]]]],
+    ["libs",
+     [["import dynlibs", "00000000000006bb"],
+      ["package external libraries", "00000000000006bb"],
+      ["module dynlibs", "00000000000006bb"],
+      ["module plugins", "00000000000006bb"]]]]],
+  ["Lean 4.32.2, commit f3b06c705e6c85f5314019d5d3baab0fec5b580c",
+   "7508232886a2752a"],
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\ScalarCodec.lean",
+   "2984d437e7b27d96"],
+  ["options", "00000000000006bb"],
+  ["isModule: false", "feefd2a0d3a1847e"],
+  ["Module.name: Ocl2Gratra.ScalarCodec", "91092deb218f0716"],
+  ["Package.id?: (some Ocl2CypherProof)", "957a07e6278a3948"],
+  ["Module.leanArgs: #[]", "00000000000006bb"]],
+ "depHash": "aff273fd7524180a"}

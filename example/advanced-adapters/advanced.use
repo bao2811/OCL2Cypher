@@ -1,0 +1,29 @@
+model AdvancedAdapter
+
+class Library
+end
+
+class Book
+end
+
+association Catalog between
+    Library[0..*] role library qualifier (shelf : String)
+    Book[0..*] role books
+end
+
+association Ownership between
+    Library[0..*] role ownedBy
+    Book[0..*] role ownedBook qualifier (section : String)
+end
+
+associationclass Loan between
+    Library[0..*] role lender
+    Book[0..*] role borrowedBook
+attributes
+    note : String
+end
+
+constraints
+context Library inv QualifiedLookup: self.books['A']->size() = 1
+context Book inv SourceEndQualifiedLookup: self.ownedBy['X']->size() = 1
+context Library inv HasLoan: self.loan->notEmpty()

@@ -1,0 +1,57 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs":
+ {"o": ["dc126588e6882316.olean"],
+  "m": false,
+  "i": "6616e0df20dd7b89.ilean",
+  "c": "c2c8bac7f86c6de2.c"},
+ "log":
+ [{"message":
+   ".> LEAN_PATH=G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean g:\\TGG-OCL-Neo4j\\use-neo4j\\_build_lib\\lean-4.32.2\\lean-4.32.2-windows\\bin\\lean.exe G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\CypherStringText.lean -o G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\CypherStringText.olean -i G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\CypherStringText.ilean -c G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\CypherStringText.c --setup G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\CypherStringText.setup.json --json",
+   "level": "trace"},
+  {"message":
+   "Ocl2Gratra/CypherStringText.lean:166:0: 'Ocl2Gratra.CypherStringText.decodeBody_escape' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CypherStringText.lean:167:0: 'Ocl2Gratra.CypherStringText.parseExact_quote' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CypherStringText.lean:168:0: 'Ocl2Gratra.CypherStringText.parseString_quoteString' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CypherStringText.lean:169:0: 'Ocl2Gratra.CypherStringText.quoteString_injective' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CypherStringText.lean:170:0: 'Ocl2Gratra.CypherStringText.parseAdmittedString_quoteString' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CypherStringText.lean:171:0: 'Ocl2Gratra.CypherStringText.parseLeaf_string' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CypherStringText.lean:172:0: 'Ocl2Gratra.CypherStringText.parseLeaf_variable' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"}],
+ "inputs":
+ [["Ocl2Gratra.CypherStringText:deps",
+   [["deps",
+     [["Ocl2CypherProof/Ocl2Gratra:extraDep",
+       [["@Ocl2CypherProof:extraDep", "00000000000006bb"]]],
+      ["imports",
+       [["Ocl2Gratra.CypherIdentifierText transitive imports (legacy)",
+         "0ede4e6530d0b533"],
+        ["Ocl2Gratra.CypherIdentifierText:importAllArts",
+         "13c68f49dd7cdf6e"]]]]],
+    ["libs",
+     [["import dynlibs", "00000000000006bb"],
+      ["package external libraries", "00000000000006bb"],
+      ["module dynlibs", "00000000000006bb"],
+      ["module plugins", "00000000000006bb"]]]]],
+  ["Lean 4.32.2, commit f3b06c705e6c85f5314019d5d3baab0fec5b580c",
+   "7508232886a2752a"],
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\CypherStringText.lean",
+   "a8290466ffbfd4c2"],
+  ["options", "00000000000006bb"],
+  ["isModule: false", "feefd2a0d3a1847e"],
+  ["Module.name: Ocl2Gratra.CypherStringText", "034202ce18be9f42"],
+  ["Package.id?: (some Ocl2CypherProof)", "957a07e6278a3948"],
+  ["Module.leanArgs: #[]", "00000000000006bb"]],
+ "depHash": "f0ee4c1f087a6b7d"}

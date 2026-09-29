@@ -1,0 +1,7 @@
+!create catalog1 : Catalog
+!set catalog1.name := 'Main'
+!create item1 : Item
+!set item1.name := 'Book'
+!set item1.active := true
+!set item1.price := 12.5
+!insert (catalog1, item1) into CatalogItems

@@ -1,0 +1,50 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs":
+ {"o": ["9e78ad0071c4c93c.olean"],
+  "m": false,
+  "i": "1388619df22fc04b.ilean",
+  "c": "724333ce6b54dba8.c"},
+ "log":
+ [{"message":
+   ".> LEAN_PATH=G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean c:\\Users\\Admin\\.elan\\toolchains\\leanprover--lean4---v4.32.2\\bin\\lean.exe G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\OclEqualityTotal.lean -o G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\OclEqualityTotal.olean -i G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\OclEqualityTotal.ilean -c G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\OclEqualityTotal.c --setup G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\OclEqualityTotal.setup.json --json",
+   "level": "trace"},
+  {"message":
+   "Ocl2Gratra/OclEqualityTotal.lean:228:0: 'Ocl2Gratra.OclEqualityTotal.collection_equal_total' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/OclEqualityTotal.lean:229:0: 'Ocl2Gratra.OclEqualityTotal.collection_equal_refl' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/OclEqualityTotal.lean:230:0: 'Ocl2Gratra.OclEqualityTotal.collection_equal_sym' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/OclEqualityTotal.lean:231:0: 'Ocl2Gratra.OclEqualityTotal.set_duplicate_irrelevant' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/OclEqualityTotal.lean:232:0: 'Ocl2Gratra.OclEqualityTotal.bag_cons_congr' depends on axioms: [propext]",
+   "level": "info"}],
+ "inputs":
+ [["Ocl2Gratra.OclEqualityTotal:deps",
+   [["deps",
+     [["Ocl2CypherProof/Ocl2Gratra:extraDep",
+       [["@Ocl2CypherProof:extraDep", "00000000000006bb"]]],
+      ["imports",
+       [["Ocl2Gratra.Boolean3Kleene transitive imports (legacy)",
+         "00000000000006bb"],
+        ["Ocl2Gratra.Boolean3Kleene:importAllArts", "b44f4a99e1d983c1"]]]]],
+    ["libs",
+     [["import dynlibs", "00000000000006bb"],
+      ["package external libraries", "00000000000006bb"],
+      ["module dynlibs", "00000000000006bb"],
+      ["module plugins", "00000000000006bb"]]]]],
+  ["Lean 4.32.2, commit f3b06c705e6c85f5314019d5d3baab0fec5b580c",
+   "7508232886a2752a"],
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\OclEqualityTotal.lean",
+   "41f54fc1685f118e"],
+  ["options", "00000000000006bb"],
+  ["isModule: false", "feefd2a0d3a1847e"],
+  ["Module.name: Ocl2Gratra.OclEqualityTotal", "9841a000a76cbe03"],
+  ["Package.id?: (some Ocl2CypherProof)", "957a07e6278a3948"],
+  ["Module.leanArgs: #[]", "00000000000006bb"]],
+ "depHash": "fa053de8ac81fb15"}

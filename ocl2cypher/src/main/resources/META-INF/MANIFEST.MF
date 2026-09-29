@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Plugin-Name: OCL2CypherPlugin
+Plugin-Version: 7.1.0
+Main-Class: org.uet.dse.ocl2cypher.plugin.Main
+Plugin-Publisher: Hoang Quoc Bao

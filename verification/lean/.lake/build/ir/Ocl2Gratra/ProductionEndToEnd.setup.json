@@ -1,0 +1,15 @@
+{"plugins": [],
+ "package": "Ocl2CypherProof",
+ "options": {},
+ "name": "Ocl2Gratra.ProductionEndToEnd",
+ "isModule": false,
+ "importArts":
+ {"Ocl2Gratra.ProductionQSyntax":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\ProductionQSyntax.olean"],
+  "Ocl2Gratra.OclTypeLattice":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\OclTypeLattice.olean"],
+  "Ocl2Gratra.OclEqualityTotal":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\OclEqualityTotal.olean"],
+  "Ocl2Gratra.Boolean3Kleene":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\Boolean3Kleene.olean"]},
+ "dynlibs": []}

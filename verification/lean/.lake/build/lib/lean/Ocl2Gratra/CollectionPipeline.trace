@@ -1,0 +1,62 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs":
+ {"o": ["a60d907fc176fe4a.olean"],
+  "m": false,
+  "i": "27c9f030359e358d.ilean",
+  "c": "19c643c657a38705.c"},
+ "log":
+ [{"message":
+   ".> LEAN_PATH=G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean g:\\TGG-OCL-Neo4j\\use-neo4j\\_build_lib\\lean-4.32.2\\lean-4.32.2-windows\\bin\\lean.exe G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\CollectionPipeline.lean -o G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\CollectionPipeline.olean -i G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\CollectionPipeline.ilean -c G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\CollectionPipeline.c --setup G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\CollectionPipeline.setup.json --json",
+   "level": "trace"},
+  {"message":
+   "Ocl2Gratra/CollectionPipeline.lean:187:0: 'Ocl2Gratra.CollectionPipeline.decode_encode' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CollectionPipeline.lean:188:0: 'Ocl2Gratra.CollectionPipeline.encode_injective' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CollectionPipeline.lean:189:0: 'Ocl2Gratra.CollectionPipeline.whole_bottom_distinct_from_empty' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CollectionPipeline.lean:190:0: 'Ocl2Gratra.CollectionPipeline.filter_items_agree' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CollectionPipeline.lean:191:0: 'Ocl2Gratra.CollectionPipeline.filter_encode_commutes' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CollectionPipeline.lean:192:0: 'Ocl2Gratra.CollectionPipeline.select_all_bottom' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CollectionPipeline.lean:193:0: 'Ocl2Gratra.CollectionPipeline.reject_all_bottom' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CollectionPipeline.lean:194:0: 'Ocl2Gratra.CollectionPipeline.map_agrees' depends on axioms: [propext]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CollectionPipeline.lean:195:0: 'Ocl2Gratra.CollectionPipeline.collect_encode_commutes' depends on axioms: [propext]",
+   "level": "info"}],
+ "inputs":
+ [["Ocl2Gratra.CollectionPipeline:deps",
+   [["deps",
+     [["Ocl2CypherProof/Ocl2Gratra:extraDep",
+       [["@Ocl2CypherProof:extraDep", "00000000000006bb"]]],
+      ["imports",
+       [["Ocl2Gratra.Boolean3Kleene transitive imports (legacy)",
+         "00000000000006bb"],
+        ["Ocl2Gratra.Boolean3Kleene:importAllArts", "b44f4a99e1d983c1"]]]]],
+    ["libs",
+     [["import dynlibs", "00000000000006bb"],
+      ["package external libraries", "00000000000006bb"],
+      ["module dynlibs", "00000000000006bb"],
+      ["module plugins", "00000000000006bb"]]]]],
+  ["Lean 4.32.2, commit f3b06c705e6c85f5314019d5d3baab0fec5b580c",
+   "7508232886a2752a"],
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\CollectionPipeline.lean",
+   "4dc13512bffb5ef6"],
+  ["options", "00000000000006bb"],
+  ["isModule: false", "feefd2a0d3a1847e"],
+  ["Module.name: Ocl2Gratra.CollectionPipeline", "e94ff64712625f9b"],
+  ["Package.id?: (some Ocl2CypherProof)", "957a07e6278a3948"],
+  ["Module.leanArgs: #[]", "00000000000006bb"]],
+ "depHash": "e591fa80862081d3"}

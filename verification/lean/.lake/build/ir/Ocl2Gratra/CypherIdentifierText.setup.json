@@ -1,0 +1,9 @@
+{"plugins": [],
+ "package": "Ocl2CypherProof",
+ "options": {},
+ "name": "Ocl2Gratra.CypherIdentifierText",
+ "isModule": false,
+ "importArts":
+ {"Ocl2Gratra.CypherCanonicalGrammar":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\CypherCanonicalGrammar.olean"]},
+ "dynlibs": []}

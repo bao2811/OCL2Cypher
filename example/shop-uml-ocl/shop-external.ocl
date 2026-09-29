@@ -1,0 +1,7 @@
+context Catalog
+inv HasItems:
+    self.items->size() > 0
+
+context Item
+inv Named:
+    self.name <> ''

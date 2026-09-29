@@ -1,0 +1,45 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs":
+ {"o": ["f46c41010311ccf3.olean"],
+  "m": false,
+  "i": "4ff96834793ab58d.ilean",
+  "c": "802be628566e1277.c"},
+ "log":
+ [{"message":
+   ".> LEAN_PATH=G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean g:\\TGG-OCL-Neo4j\\use-neo4j\\_build_lib\\lean-4.32.2\\lean-4.32.2-windows\\bin\\lean.exe G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\CypherIntegerText.lean -o G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\CypherIntegerText.olean -i G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\CypherIntegerText.ilean -c G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\CypherIntegerText.c --setup G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\CypherIntegerText.setup.json --json",
+   "level": "trace"},
+  {"message":
+   "Ocl2Gratra/CypherIntegerText.lean:34:0: 'Ocl2Gratra.CypherIntegerText.parse_print' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CypherIntegerText.lean:35:0: 'Ocl2Gratra.CypherIntegerText.print_injective' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/CypherIntegerText.lean:36:0: 'Ocl2Gratra.CypherIntegerText.parse_rejects_noncanonical' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"}],
+ "inputs":
+ [["Ocl2Gratra.CypherIntegerText:deps",
+   [["deps",
+     [["Ocl2CypherProof/Ocl2Gratra:extraDep",
+       [["@Ocl2CypherProof:extraDep", "00000000000006bb"]]],
+      ["imports",
+       [["Ocl2Gratra.CypherParameterText transitive imports (legacy)",
+         "d81802e2eaff003e"],
+        ["Ocl2Gratra.CypherParameterText:importAllArts",
+         "d1c878ec48abefc1"]]]]],
+    ["libs",
+     [["import dynlibs", "00000000000006bb"],
+      ["package external libraries", "00000000000006bb"],
+      ["module dynlibs", "00000000000006bb"],
+      ["module plugins", "00000000000006bb"]]]]],
+  ["Lean 4.32.2, commit f3b06c705e6c85f5314019d5d3baab0fec5b580c",
+   "7508232886a2752a"],
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\CypherIntegerText.lean",
+   "56e82062aac52ee8"],
+  ["options", "00000000000006bb"],
+  ["isModule: false", "feefd2a0d3a1847e"],
+  ["Module.name: Ocl2Gratra.CypherIntegerText", "570621d9d3fca304"],
+  ["Package.id?: (some Ocl2CypherProof)", "957a07e6278a3948"],
+  ["Module.leanArgs: #[]", "00000000000006bb"]],
+ "depHash": "30eb13a87e60f784"}

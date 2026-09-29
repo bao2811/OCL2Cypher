@@ -1,0 +1,9 @@
+{"plugins": [],
+ "package": "Ocl2CypherProof",
+ "options": {},
+ "name": "Ocl2Gratra.OclEqualityTotal",
+ "isModule": false,
+ "importArts":
+ {"Ocl2Gratra.Boolean3Kleene":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\Boolean3Kleene.olean"]},
+ "dynlibs": []}

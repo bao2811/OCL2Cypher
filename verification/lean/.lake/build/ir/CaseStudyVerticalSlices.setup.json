@@ -1,0 +1,11 @@
+{"plugins": [],
+ "package": "Ocl2CypherProof",
+ "options": {},
+ "name": "CaseStudyVerticalSlices",
+ "isModule": false,
+ "importArts":
+ {"ExtensionalNestedSet":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\ExtensionalNestedSet.olean"],
+  "CanonicalScalarCodec":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\CanonicalScalarCodec.olean"]},
+ "dynlibs": []}

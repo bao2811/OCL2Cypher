@@ -1,0 +1,43 @@
+{"plugins": [],
+ "package": "Ocl2CypherProof",
+ "options": {},
+ "name": "Ocl2Gratra",
+ "isModule": false,
+ "importArts":
+ {"Ocl2Gratra.ScalarCodec":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\ScalarCodec.olean"],
+  "Ocl2Gratra.ProductionQSyntax":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\ProductionQSyntax.olean"],
+  "Ocl2Gratra.ProductionEndToEnd":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\ProductionEndToEnd.olean"],
+  "Ocl2Gratra.OclTypeLattice":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\OclTypeLattice.olean"],
+  "Ocl2Gratra.OclEqualityTotal":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\OclEqualityTotal.olean"],
+  "Ocl2Gratra.IntegerRangeCertificate":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\IntegerRangeCertificate.olean"],
+  "Ocl2Gratra.FullP3P4":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\FullP3P4.olean"],
+  "Ocl2Gratra.ExactRealField":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\ExactRealField.olean"],
+  "Ocl2Gratra.DifferentialTheorem":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\DifferentialTheorem.olean"],
+  "Ocl2Gratra.CypherStringText":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\CypherStringText.olean"],
+  "Ocl2Gratra.CypherParameterText":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\CypherParameterText.olean"],
+  "Ocl2Gratra.CypherIntegerText":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\CypherIntegerText.olean"],
+  "Ocl2Gratra.CypherIdentifierText":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\CypherIdentifierText.olean"],
+  "Ocl2Gratra.CypherCanonicalGrammar":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\CypherCanonicalGrammar.olean"],
+  "Ocl2Gratra.CollectionPipeline":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\CollectionPipeline.olean"],
+  "Ocl2Gratra.Boolean3Kleene":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\Boolean3Kleene.olean"],
+  "Ocl2Gratra.AdmittedSerialization":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\AdmittedSerialization.olean"],
+  "Ocl2Gratra.AdmittedPipeline":
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\AdmittedPipeline.olean"]},
+ "dynlibs": []}

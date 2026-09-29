@@ -1,0 +1,65 @@
+{"synthetic": false,
+ "schemaVersion": "2025-09-10",
+ "outputs":
+ {"o": ["28ff7ca2da570a4a.olean"],
+  "m": false,
+  "i": "3b1faa68d1eb83f8.ilean",
+  "c": "38c4cfec563980d3.c"},
+ "log":
+ [{"message":
+   ".> LEAN_PATH=G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean c:\\Users\\Admin\\.elan\\toolchains\\leanprover--lean4---v4.32.2\\bin\\lean.exe G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\FullP3P4.lean -o G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\FullP3P4.olean -i G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\lib\\lean\\Ocl2Gratra\\FullP3P4.ilean -c G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\FullP3P4.c --setup G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\.lake\\build\\ir\\Ocl2Gratra\\FullP3P4.setup.json --json",
+   "level": "trace"},
+  {"message":
+   "Ocl2Gratra/FullP3P4.lean:822:0: 'Ocl2Gratra.FullP3P4.p3_normalization_mutual' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/FullP3P4.lean:823:0: 'Ocl2Gratra.FullP3P4.p3_normalization' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/FullP3P4.lean:824:0: 'Ocl2Gratra.FullP3P4.p3_core_to_q_mutual' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/FullP3P4.lean:825:0: 'Ocl2Gratra.FullP3P4.p3_core_to_q' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/FullP3P4.lean:826:0: 'Ocl2Gratra.FullP3P4.p3_normalize_to_q' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/FullP3P4.lean:827:0: 'Ocl2Gratra.FullP3P4.p4_q_to_target_mutual' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/FullP3P4.lean:828:0: 'Ocl2Gratra.FullP3P4.p4_q_to_target' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/FullP3P4.lean:829:0: 'Ocl2Gratra.FullP3P4.parse_serialize' does not depend on any axioms",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/FullP3P4.lean:830:0: 'Ocl2Gratra.FullP3P4.p4_q_to_serialized' depends on axioms: [propext, Quot.sound]",
+   "level": "info"},
+  {"message":
+   "Ocl2Gratra/FullP3P4.lean:831:0: 'Ocl2Gratra.FullP3P4.p3_p4_composition' depends on axioms: [propext, Classical.choice, Quot.sound]",
+   "level": "info"}],
+ "inputs":
+ [["Ocl2Gratra.FullP3P4:deps",
+   [["deps",
+     [["Ocl2CypherProof/Ocl2Gratra:extraDep",
+       [["@Ocl2CypherProof:extraDep", "00000000000006bb"]]],
+      ["imports",
+       [["Ocl2Gratra.ProductionQSyntax transitive imports (legacy)",
+         "5681a9606a91376a"],
+        ["Ocl2Gratra.ProductionQSyntax:importAllArts", "22612faecde2b423"]]]]],
+    ["libs",
+     [["import dynlibs", "00000000000006bb"],
+      ["package external libraries", "00000000000006bb"],
+      ["module dynlibs", "00000000000006bb"],
+      ["module plugins", "00000000000006bb"]]]]],
+  ["Lean 4.32.2, commit f3b06c705e6c85f5314019d5d3baab0fec5b580c",
+   "7508232886a2752a"],
+  ["G:\\TGG-OCL-Neo4j\\use-neo4j\\verification\\lean\\Ocl2Gratra\\FullP3P4.lean",
+   "a08c64da42f13788"],
+  ["options", "00000000000006bb"],
+  ["isModule: false", "feefd2a0d3a1847e"],
+  ["Module.name: Ocl2Gratra.FullP3P4", "76381116998a80e5"],
+  ["Package.id?: (some Ocl2CypherProof)", "957a07e6278a3948"],
+  ["Module.leanArgs: #[]", "00000000000006bb"]],
+ "depHash": "92069c43e99f26f3"}
