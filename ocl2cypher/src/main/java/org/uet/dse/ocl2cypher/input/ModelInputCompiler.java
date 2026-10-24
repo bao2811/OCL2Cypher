@@ -18,14 +18,34 @@ public final class ModelInputCompiler {
     public static Result<FileCompilation> compile(ModelInputBundle input,
                                                    String invariantName,
                                                    CypherAst.Dialect dialect) {
-        SourceInvariant source = input.invariants().stream()
-                .filter(invariant -> invariant.name().equals(invariantName))
-                .findFirst().orElse(null);
-        if (source == null) {
+        return compile(input, invariantName, dialect, null);
+    }
+
+    /** Compile against a graph already built from this input; useful for invariant batches. */
+    public static Result<FileCompilation> compile(ModelInputBundle input,
+                                                   String invariantName,
+                                                   CypherAst.Dialect dialect,
+                                                   GraphBuilder.GraphBuildArtifact preparedGraph) {
+        if (preparedGraph != null
+                && !input.schema().modelKey().equals(preparedGraph.graph().modelKey())) {
+            return Result.failure(Stage.E_SM, "E_GRAPH_MODEL_KEY",
+                    "prepared graph belongs to a different model namespace");
+        }
+        var matches = input.invariants().stream()
+                .filter(invariant -> qualifiedName(invariant).equals(invariantName)
+                        || invariant.name().equals(invariantName))
+                .toList();
+        if (matches.isEmpty()) {
             return Result.failure(Stage.E_SM, "E_INVARIANT_NOT_FOUND",
                     "no invariant named '" + invariantName + "' is declared in "
                             + input.schemaPath());
         }
+        if (matches.size() != 1) {
+            return Result.failure(Stage.E_SM, "E_INVARIANT_AMBIGUOUS",
+                    "invariant name '" + invariantName + "' is ambiguous in "
+                            + input.schemaPath() + "; use Context::InvariantName");
+        }
+        SourceInvariant source = matches.get(0);
         var frontend = FrontendCompiler.compile(source.oclText(), input.schema());
         if (frontend.isFailure()) {
             return Result.failure(frontend.diagnostics());
@@ -41,7 +61,9 @@ public final class ModelInputCompiler {
         if (core.isFailure()) {
             return Result.failure(core.diagnostics());
         }
-        var graph = GraphBuilder.build(input.schema(), input.snapshot());
+        Result<GraphBuilder.GraphBuildArtifact> graph = preparedGraph == null
+                ? GraphBuilder.build(input.schema(), input.snapshot())
+                : Result.success(preparedGraph);
         if (graph.isFailure()) {
             return Result.failure(graph.diagnostics());
         }
@@ -56,5 +78,9 @@ public final class ModelInputCompiler {
         var serialized = Serializer.serialize(realized.value());
         return Result.success(new FileCompilation(input, source, document, core.value(),
                 graph.value(), query.value(), realized.value(), serialized));
+    }
+
+    private static String qualifiedName(SourceInvariant invariant) {
+        return invariant.contextClassKey() + "::" + invariant.name();
     }
 }

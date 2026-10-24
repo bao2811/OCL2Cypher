@@ -575,7 +575,8 @@ class SemanticBoundaryRegressionTest {
         String text = realizeViolationText(
                 "context Person inv Union: Set{'a'}->union(Set{'b'})->includes('a')",
                 sm, Snapshot.builder().object("p", "Person").build());
-        assertTrue(text.contains("reduce(`distinctAcc"), text);
+        assertTrue(text.contains("COLLECT {UNWIND"), text);
+        assertTrue(text.contains("RETURN DISTINCT"), text);
     }
 
     @Test
@@ -608,7 +609,7 @@ class SemanticBoundaryRegressionTest {
         assertTrue(includesAll.contains("all(`membershipItem"), includesAll);
         assertTrue(excludesAll.contains("all(`membershipItem"), excludesAll);
         assertTrue(intersection.contains("intersectionItem"), intersection);
-        assertTrue(intersection.contains("reduce(`distinctAcc"), intersection);
+        assertTrue(intersection.contains("COLLECT {UNWIND"), intersection);
     }
 
     @Test
@@ -726,15 +727,15 @@ class SemanticBoundaryRegressionTest {
         // Empty literal has no uncertified elements; member 1 has an I64 certificate.
         String numericMembership = realizeViolationText(
                 "context Person inv EmptyMember: Set{}->excludes(1)", sm, sn);
-        assertTrue(numericMembership.contains(" IN []"), numericMembership);
+        assertTrue(numericMembership.contains("UNWIND []"), numericMembership);
         String equalityText = realizeViolationText(
                 "context Person inv EmptyEq: Set{} = Set{'a'}->reject(x | true)", sm, sn);
         String membershipText = realizeViolationText(
                 "context Person inv EmptyMember: Set{}->excludes('a')", sm, sn);
 
-        assertTrue(letText.contains(" IN []"), letText);
-        assertTrue(equalityText.contains(" IN []"), equalityText);
-        assertTrue(membershipText.contains(" IN []"), membershipText);
+        assertTrue(letText.contains("UNWIND []"), letText);
+        assertTrue(equalityText.contains("UNWIND []"), equalityText);
+        assertTrue(membershipText.contains("UNWIND []"), membershipText);
         assertEquals(List.of(), org.uet.dse.ocl2cypher.api.CoreOracle.violationsOclEq(
                 "context Person inv EmptyLet: "
                 + "let xs : Set(Integer) = Set{} in xs->isEmpty()", sm, sn));
@@ -817,14 +818,14 @@ class SemanticBoundaryRegressionTest {
                 "context Person inv SetSize: Set{1, 1}->size() = 1", sm, sn);
         String bagSizeText = realizeViolationText(
                 "context Person inv BagSize: Bag{1, 1}->size() = 2", sm, sn);
-        assertTrue(setSizeText.contains("reduce(`distinctAcc"), setSizeText);
-        assertFalse(bagSizeText.contains("distinctAcc"), bagSizeText);
+        assertTrue(setSizeText.contains("COLLECT {UNWIND"), setSizeText);
+        assertFalse(bagSizeText.contains("COLLECT {UNWIND"), bagSizeText);
         String setText = realizeViolationText("context Person inv SetMembers: Set{1,1}->notEmpty()", sm, sn);
         String bagText = realizeViolationText("context Person inv BagMembers: Bag{1,1}->notEmpty()", sm, sn);
 
-        assertTrue(setText.contains("reduce(`distinctAcc"), setText);
-        assertTrue(setText.contains("any(`existingItem"), setText);
-        assertFalse(bagText.contains("distinctAcc"), bagText);
+        assertTrue(setText.contains("COLLECT {UNWIND"), setText);
+        assertTrue(setText.contains("RETURN DISTINCT"), setText);
+        assertFalse(bagText.contains("COLLECT {UNWIND"), bagText);
     }
 
     @Test
@@ -957,7 +958,7 @@ class SemanticBoundaryRegressionTest {
                 QQuery.QueryMode.VALUE, plan.type, null, null, false);
         var realized = Realization.realize(query, graph, CypherAst.Dialect.CYPHER_5);
         assertTrue(realized.isSuccess(), () -> realized.diagnostics().toString());
-        assertTrue(Serializer.cypherText(realized.value()).contains("reduce(`distinctAcc"));
+        assertTrue(Serializer.cypherText(realized.value()).contains("COLLECT {UNWIND"));
         assertEquals(CypherAst.ResultShape.SET, realized.value().contract().shape());
     }
 

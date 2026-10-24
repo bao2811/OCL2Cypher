@@ -237,8 +237,12 @@ public final class ElaboratedSourceInterpreter {
 
     private static OclValue unary(OclOperation operation, OclValue operand,
                                   OclType resultType) {
+        if (operation == OclOperation.OCL_IS_UNDEFINED) {
+            return operand.isBottom() ? Boolean3.TRUE : Boolean3.FALSE;
+        }
         if (operand.isBottom()) return new OclValue.BottomValue(resultType);
         return switch (operation) {
+            case OCL_IS_UNDEFINED -> throw new IllegalStateException("handled before bottom propagation");
             case BOOLEAN_NOT -> OclOps.boolNot(operand);
             case NUMERIC_NEGATE -> OclOps.negate(operand, resultType);
             case NUMERIC_ABS -> OclOps.abs(operand, resultType);

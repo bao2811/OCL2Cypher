@@ -17,8 +17,8 @@ import java.util.*;
  */
 public final class GraphModel {
 
-    public static final String ENCODING_PROFILE = "ocl2cypher-canonical";
-    public static final String ENCODING_VERSION = "7.4";
+    public static final String ENCODING_PROFILE = Uml2GraphEncodingContract.PROFILE;
+    public static final String ENCODING_VERSION = Uml2GraphEncodingContract.VERSION;
 
     public enum Projection {
         SCHEMA,
@@ -28,23 +28,32 @@ public final class GraphModel {
     }
 
     /** Canonical relationship roles; each maps to one PGMM physical type. */
-    public static final String OBJECT_INSTANCE_OF = "ObjectInstanceOf";
-    public static final String INSTANCE_OF = "InstanceOf";
-    public static final String HAS_ATTRIBUTE = "HasAttribute";
-    public static final String OBJECT_HAS_ATTRIBUTE = "ObjectHasAttribute";
-    public static final String EXTENDS = "Extends";
-    public static final String ASSOCIATE_WITH = "AssociateWith";
-    public static final String AGGREGATES = "Aggregates";
-    public static final String COMPOSE_OF = "ComposeOf";
-    public static final String ASSOCIATION_CLASS_SCHEMA_SOURCE = "sourceAssoClass";
-    public static final String ASSOCIATION_CLASS_SCHEMA_TARGET = "targetAssoClass";
-    public static final String LINK_ASSOCIATE_WITH = "LinkAssociateWith";
-    public static final String LINK_AGGREGATES = "LinkAggregates";
-    public static final String LINK_COMPOSE_OF = "LinkComposeOf";
+    public static final String OBJECT_INSTANCE_OF =
+            Uml2GraphEncodingContract.Relationship.OBJECT_INSTANCE_OF;
+    public static final String INSTANCE_OF = Uml2GraphEncodingContract.Relationship.INSTANCE_OF;
+    public static final String HAS_ATTRIBUTE =
+            Uml2GraphEncodingContract.Relationship.HAS_ATTRIBUTE;
+    public static final String OBJECT_HAS_ATTRIBUTE =
+            Uml2GraphEncodingContract.Relationship.OBJECT_HAS_ATTRIBUTE;
+    public static final String EXTENDS = Uml2GraphEncodingContract.Relationship.EXTENDS;
+    public static final String ASSOCIATE_WITH =
+            Uml2GraphEncodingContract.Relationship.ASSOCIATE_WITH;
+    public static final String AGGREGATES = Uml2GraphEncodingContract.Relationship.AGGREGATES;
+    public static final String COMPOSE_OF = Uml2GraphEncodingContract.Relationship.COMPOSE_OF;
+    public static final String ASSOCIATION_CLASS_SCHEMA_SOURCE =
+            Uml2GraphEncodingContract.Relationship.ASSOCIATION_CLASS_SCHEMA_SOURCE;
+    public static final String ASSOCIATION_CLASS_SCHEMA_TARGET =
+            Uml2GraphEncodingContract.Relationship.ASSOCIATION_CLASS_SCHEMA_TARGET;
+    public static final String LINK_ASSOCIATE_WITH =
+            Uml2GraphEncodingContract.Relationship.LINK_ASSOCIATE_WITH;
+    public static final String LINK_AGGREGATES =
+            Uml2GraphEncodingContract.Relationship.LINK_AGGREGATES;
+    public static final String LINK_COMPOSE_OF =
+            Uml2GraphEncodingContract.Relationship.LINK_COMPOSE_OF;
     public static final String ASSOCIATION_CLASS_SOURCE_PARTICIPANT =
-            "AssociationClassSourceParticipant";
+            Uml2GraphEncodingContract.Relationship.ASSOCIATION_CLASS_SOURCE_PARTICIPANT;
     public static final String ASSOCIATION_CLASS_TARGET_PARTICIPANT =
-            "AssociationClassTargetParticipant";
+            Uml2GraphEncodingContract.Relationship.ASSOCIATION_CLASS_TARGET_PARTICIPANT;
 
     public static String associationClassSourceParticipant(String associationKey) {
         return ASSOCIATION_CLASS_SOURCE_PARTICIPANT;
@@ -61,6 +70,11 @@ public final class GraphModel {
                        List<String> labels,
                        Map<String, String> properties) {
         public Node {
+            Objects.requireNonNull(stableKey, "stable key");
+            Objects.requireNonNull(modelKey, "model key");
+            Objects.requireNonNull(projection, "projection");
+            Objects.requireNonNull(observationRole, "observation role");
+            labels = List.copyOf(labels);
             properties = Map.copyOf(properties);
         }
     }
@@ -73,6 +87,12 @@ public final class GraphModel {
                                String targetKey,
                                Map<String, String> properties) {
         public Relationship {
+            Objects.requireNonNull(stableKey, "stable key");
+            Objects.requireNonNull(modelKey, "model key");
+            Objects.requireNonNull(projection, "projection");
+            Objects.requireNonNull(physicalType, "physical type");
+            Objects.requireNonNull(sourceKey, "source key");
+            Objects.requireNonNull(targetKey, "target key");
             properties = Map.copyOf(properties);
         }
     }
@@ -82,7 +102,7 @@ public final class GraphModel {
     private final Map<String, Relationship> relationships = new LinkedHashMap<>();
 
     public GraphModel(String modelKey) {
-        this.modelKey = Objects.requireNonNull(modelKey);
+        this.modelKey = Objects.requireNonNull(modelKey, "model key");
     }
 
     public String modelKey() {

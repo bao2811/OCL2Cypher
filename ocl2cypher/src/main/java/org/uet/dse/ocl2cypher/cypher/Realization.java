@@ -14,6 +14,7 @@ import org.uet.dse.ocl2cypher.diagnostics.SourceSpan;
 import org.uet.dse.ocl2cypher.diagnostics.Stage;
 import org.uet.dse.ocl2cypher.graph.GraphModel;
 import org.uet.dse.ocl2cypher.graph.GraphValueCodec;
+import org.uet.dse.ocl2cypher.graph.Uml2GraphEncodingContract;
 import org.uet.dse.ocl2cypher.qcyp.NormQ;
 import org.uet.dse.ocl2cypher.qcyp.QNode;
 import org.uet.dse.ocl2cypher.qcyp.QQuery;
@@ -159,7 +160,8 @@ public final class Realization {
                                     List.of(), 0, inheritanceBound())))));
             clauses.add(new MatchClause(typing, null));
             OclType selfType = OclType.clazz(q.contextClassKey());
-            ctx.bind(q.selfVariable(), taggedObject(selfAlias, selfType), selfType);
+            ctx.bindNode(q.selfVariable(), taggedObject(selfAlias, selfType), selfType,
+                    selfAlias);
         }
         CypherExpr result;
         if (q.expressionBody() != null) {
@@ -219,7 +221,8 @@ public final class Realization {
 
         Ctx ctx = new Ctx();
         OclType selfType = OclType.clazz(q.contextClassKey());
-        ctx.bind(q.selfVariable(), taggedObject(selfAlias, selfType), selfType);
+        ctx.bindNode(q.selfVariable(), taggedObject(selfAlias, selfType), selfType,
+                selfAlias);
         CypherExpr body = realizeExpr(q.expressionBody(), ctx);
         String bodyAlias = fresh("body");
         WithClause withBody = new WithClause(false,
@@ -475,16 +478,19 @@ public final class Realization {
             return realizeParticipantThroughAssociationClassOne(nav, ctx);
         }
         CypherExpr src = realizeExpr(nav.source, ctx);
+        Optional<String> boundSourceAlias = ctx.nodeAlias(nav.source);
         return bindOnce("navigationSource", src, sourceValue ->
                 bindQualifiersOnce(nav.qualifiers, ctx, qualifierValues -> {
         String roleParam = fresh("__oclRole");
         addParam(roleParam, "Physical:Role", QueryParameter.Origin.GENERATED, nav.roleName);
         String o = fresh("o");
         String t = fresh("t");
+        NodePattern sourceNode = boundSourceAlias
+                .map(alias -> new NodePattern(alias, List.of(), List.of()))
+                .orElseGet(() -> new NodePattern(o, List.of("Object"),
+                        withModel(new PropertyMapEntry("use_id", payload(sourceValue)))));
         Pattern navP = new Pattern(List.of(new PathPattern(
-                List.of(new NodePattern(o, List.of("Object"),
-                                withModel(new PropertyMapEntry("use_id", payload(sourceValue)))),
-                        new NodePattern(t, List.of("Object"), modelProperty())),
+                List.of(sourceNode, new NodePattern(t, List.of("Object"), modelProperty())),
                 List.of(new RelPattern(fresh("rel"), binaryLinkType(nav.associationKey),
                         nav.reverse ? RelDirection.INCOMING : RelDirection.OUTGOING,
                         navigationProperties(roleParam, nav.associationKey, nav.reverse,
@@ -557,11 +563,14 @@ public final class Realization {
                                                                boolean receiverIsTarget,
                                                                List<CypherExpr> qualifiers) {
         List<PropertyMapEntry> properties = new ArrayList<>();
-        properties.add(new PropertyMapEntry("associationKey",
+        properties.add(new PropertyMapEntry(
+                Uml2GraphEncodingContract.Property.ASSOCIATION_KEY,
                 new StringLiteral(associationKey)));
         properties.add(new PropertyMapEntry("modelKey",
                 modelKeyExpr()));
-        properties.add(new PropertyMapEntry(receiverIsTarget ? "targetRole" : "sourceRole",
+        properties.add(new PropertyMapEntry(receiverIsTarget
+                        ? Uml2GraphEncodingContract.Property.TARGET_ROLE
+                        : Uml2GraphEncodingContract.Property.SOURCE_ROLE,
                 new ParameterExpr(roleParam)));
         for (int i = 0; i < qualifiers.size(); i++) {
             CypherExpr qualifier = qualifiers.get(i);
@@ -617,7 +626,10 @@ public final class Realization {
         List<PropertyMapEntry> sourceProperties = associationClassEdgeProperties(
                 associationKey, null, null, reverse, qualifiers);
         List<PropertyMapEntry> targetProperties = associationClassEdgeProperties(
-                associationKey, reverse ? "sourceRole" : "targetRole", roleParam, reverse,
+                associationKey, reverse
+                        ? Uml2GraphEncodingContract.Property.SOURCE_ROLE
+                        : Uml2GraphEncodingContract.Property.TARGET_ROLE,
+                roleParam, reverse,
                 qualifiers);
         return new Pattern(List.of(new PathPattern(
                 List.of(new NodePattern(source, List.of("Object"),
@@ -635,7 +647,9 @@ public final class Realization {
             String associationKey, String roleProperty, String roleParam,
             boolean reverse, List<CypherExpr> qualifiers) {
         List<PropertyMapEntry> properties = new ArrayList<>();
-        properties.add(new PropertyMapEntry("associationKey", new StringLiteral(associationKey)));
+        properties.add(new PropertyMapEntry(
+                Uml2GraphEncodingContract.Property.ASSOCIATION_KEY,
+                new StringLiteral(associationKey)));
         properties.add(new PropertyMapEntry("modelKey", modelKeyExpr()));
         if (roleProperty != null) {
             properties.add(new PropertyMapEntry(roleProperty, new ParameterExpr(roleParam)));
@@ -653,9 +667,12 @@ public final class Realization {
                                                          boolean reverse,
                                                          List<CypherExpr> qualifiers) {
         List<PropertyMapEntry> props = new ArrayList<>();
-        props.add(new PropertyMapEntry("associationKey", new StringLiteral(associationKey)));
+        props.add(new PropertyMapEntry(Uml2GraphEncodingContract.Property.ASSOCIATION_KEY,
+                new StringLiteral(associationKey)));
         props.add(new PropertyMapEntry("modelKey", modelKeyExpr()));
-        props.add(new PropertyMapEntry(reverse ? "sourceRole" : "targetRole",
+        props.add(new PropertyMapEntry(reverse
+                        ? Uml2GraphEncodingContract.Property.SOURCE_ROLE
+                        : Uml2GraphEncodingContract.Property.TARGET_ROLE,
                 new ParameterExpr(roleParam)));
         for (int i = 0; i < qualifiers.size(); i++) {
             CypherExpr q = qualifiers.get(i);
@@ -672,7 +689,8 @@ public final class Realization {
     private String binaryLinkType(String associationKey) {
         Optional<String> instanceType = graph.relationships().stream()
                 .filter(relationship -> associationKey.equals(
-                        relationship.properties().get("associationKey")))
+                        relationship.properties().get(
+                                Uml2GraphEncodingContract.Property.ASSOCIATION_KEY)))
                 .map(GraphModel.Relationship::physicalType)
                 .filter(type -> GraphModel.LINK_ASSOCIATE_WITH.equals(type)
                         || GraphModel.LINK_AGGREGATES.equals(type)
@@ -681,7 +699,8 @@ public final class Realization {
         if (instanceType.isPresent()) return instanceType.orElseThrow();
         Optional<String> schemaType = graph.relationships().stream()
                 .filter(relationship -> associationKey.equals(
-                        relationship.properties().get("associationKey")))
+                        relationship.properties().get(
+                                Uml2GraphEncodingContract.Property.ASSOCIATION_KEY)))
                 .map(GraphModel.Relationship::physicalType)
                 .filter(type -> GraphModel.ASSOCIATE_WITH.equals(type)
                         || GraphModel.AGGREGATES.equals(type)
@@ -968,6 +987,7 @@ public final class Realization {
             requireStoredIntegerInt64(ar);
         }
         CypherExpr src = realizeExpr(ar.source, ctx);
+        Optional<String> boundSourceAlias = ctx.nodeAlias(ar.source);
         String akParam = fresh("__oclAttr");
         addParam(akParam, "Physical:AttributeKey", QueryParameter.Origin.GENERATED,
                 ar.ownerClassKey + "::" + ar.attributeName);
@@ -978,10 +998,12 @@ public final class Realization {
         //            (s:AttributeValue {attributeKey: $ak}).  Collect the
         // tagged storage carrier, not only s.value: a defined String equal to
         // the old __BOTTOM__ sentinel must remain distinguishable from bottom.
+        NodePattern sourceNode = boundSourceAlias
+                .map(alias -> new NodePattern(alias, List.of(), List.of()))
+                .orElseGet(() -> new NodePattern(o, List.of("Object"),
+                        withModel(new PropertyMapEntry("use_id", payload(source)))));
         Pattern slotPattern = new Pattern(List.of(new PathPattern(
-                List.of(new NodePattern(o, List.of("Object"),
-                                withModel(new PropertyMapEntry("use_id", payload(source)))),
-                        new NodePattern(s, List.of("AttributeValue"),
+                List.of(sourceNode, new NodePattern(s, List.of("AttributeValue"),
                                 List.of(new PropertyMapEntry("modelKey", modelKeyExpr()),
                                         new PropertyMapEntry("attributeKey",
                                         new ParameterExpr(akParam))))),
@@ -1152,15 +1174,19 @@ public final class Realization {
                 return materializeParticipantThroughAssociationClassPlan(nav, ctx);
             }
             CypherExpr src = realizeExpr(nav.source, ctx);
+            Optional<String> boundSourceAlias = ctx.nodeAlias(nav.source);
             String roleParam = fresh("__oclRole");
             addParam(roleParam, "Physical:Role", QueryParameter.Origin.GENERATED, nav.roleName);
             CypherExpr value = bindOnce("navigationSource", src, source ->
                     bindQualifiersOnce(nav.qualifiers, ctx, qualifierValues -> {
             String o = fresh("o");
             String t = fresh("t");
+            NodePattern sourceNode = boundSourceAlias
+                    .map(alias -> new NodePattern(alias, List.of(), List.of()))
+                    .orElseGet(() -> new NodePattern(o, List.of("Object"),
+                            withModel(new PropertyMapEntry("use_id", payload(source)))));
             Pattern navP = new Pattern(List.of(new PathPattern(
-                    List.of(new NodePattern(o, List.of("Object"),
-                                    withModel(new PropertyMapEntry("use_id", payload(source)))),
+                    List.of(sourceNode,
                             new NodePattern(t, List.of("Object"), modelProperty())),
                     List.of(new RelPattern(fresh("rel"), binaryLinkType(nav.associationKey),
                              nav.reverse ? RelDirection.INCOMING : RelDirection.OUTGOING,
@@ -1618,22 +1644,19 @@ public final class Realization {
     }
 
     /**
-     * Stable first-occurrence deduplication for the atomic element domain of
-     * OCL_val.  Bag paths do not call this helper and therefore retain every
-     * occurrence.
+     * Native grouping deduplication for the fixed-shape tagged atomic carrier.
+     * Neo4j DISTINCT groups equal maps, including equal null payloads; the
+     * explicit type and bottom fields therefore implement the same total typed
+     * equality as {@link #atomicTaggedEqual}. Set order is unobservable, while
+     * Bag paths do not call this helper and retain every occurrence.
      */
     private CypherExpr distinctAtomicItems(CypherExpr items) {
-        String acc = fresh("distinctAcc");
         String x = fresh("distinctItem");
-        String y = fresh("existingItem");
-        CypherExpr seen = new QuantifiedPredicateExpression(QuantifierKind.ANY, y,
-                new VariableExpr(acc),
-                atomicTaggedEqual(new VariableExpr(y), new VariableExpr(x)));
-        CypherExpr append = new BinaryExpr(BinaryOp.LIST_CONCAT,
-                new VariableExpr(acc), new ListExpr(List.of(new VariableExpr(x))));
-        CypherExpr step = new CaseExpr(List.of(
-                new WhenThen(seen, new VariableExpr(acc))), append);
-        return new ReduceExpr(acc, new ListExpr(List.of()), x, items, step);
+        CypherQuery distinct = new CypherQuery(List.of(
+                new UnwindClause(items, x),
+                new ReturnClause(true, List.of(new ProjectionItem(
+                        new VariableExpr(x), null)))), true);
+        return new CollectSubquery(distinct);
     }
 
     private CypherExpr boolean3(QNode.QExpr.Binary b, CypherExpr l, CypherExpr r) {
@@ -1729,6 +1752,8 @@ public final class Realization {
     private CypherExpr realizeUnary(QNode.QExpr.Unary u, Ctx ctx) {
         CypherExpr realizedOperand = realizeExpr(u.operand, ctx);
         return bindOnce("unaryOperand", realizedOperand, op -> switch (u.operator) {
+            case OCL_IS_UNDEFINED -> CypherArtifacts.taggedScalar(
+                    OclType.BOOLEAN, isBottom(op));
             case COLLECTION_SIZE -> {
                 CypherExpr items = new PropertyAccess(op, CypherArtifacts.OCL_ITEMS);
                 CypherExpr sz = new FunctionCall("size", false, List.of(items));
@@ -2044,12 +2069,14 @@ public final class Realization {
     }
 
     private List<PropertyMapEntry> modelProperty() {
-        return List.of(new PropertyMapEntry("modelKey", modelKeyExpr()));
+        return List.of(new PropertyMapEntry(
+                Uml2GraphEncodingContract.Property.MODEL_KEY, modelKeyExpr()));
     }
 
     private List<PropertyMapEntry> withModel(PropertyMapEntry extra) {
         List<PropertyMapEntry> properties = new ArrayList<>();
-        properties.add(new PropertyMapEntry("modelKey", modelKeyExpr()));
+        properties.add(new PropertyMapEntry(
+                Uml2GraphEncodingContract.Property.MODEL_KEY, modelKeyExpr()));
         properties.add(extra);
         return properties;
     }
@@ -2131,18 +2158,27 @@ public final class Realization {
         final OclType type;
         final Optional<IntegerRangeCertificates.Certificate> integerCertificate;
         final Optional<ExactBinary64Certificates.Certificate> exactCertificate;
+        final Optional<String> nodeAlias;
 
         Binding(CypherExpr value, OclType type) {
-            this(value, type, Optional.empty(), Optional.empty());
+            this(value, type, Optional.empty(), Optional.empty(), Optional.empty());
         }
 
         Binding(CypherExpr value, OclType type,
                 Optional<IntegerRangeCertificates.Certificate> integerCertificate,
                 Optional<ExactBinary64Certificates.Certificate> exactCertificate) {
+            this(value, type, integerCertificate, exactCertificate, Optional.empty());
+        }
+
+        Binding(CypherExpr value, OclType type,
+                Optional<IntegerRangeCertificates.Certificate> integerCertificate,
+                Optional<ExactBinary64Certificates.Certificate> exactCertificate,
+                Optional<String> nodeAlias) {
             this.value = value;
             this.type = type;
             this.integerCertificate = integerCertificate;
             this.exactCertificate = exactCertificate;
+            this.nodeAlias = nodeAlias;
         }
     }
 
@@ -2167,6 +2203,16 @@ public final class Realization {
                     integerCertificate, exactCertificate));
         }
 
+        void bindNode(org.uet.dse.ocl2cypher.core.CoreDeclaration declaration,
+                      CypherExpr value, OclType type, String nodeAlias) {
+            if (scope.containsKey(declaration)) {
+                throw new RealizeError("R_SCOPE",
+                        "declaration identity is already live: " + declaration.name());
+            }
+            scope.put(declaration, new Binding(value, type, Optional.empty(),
+                    Optional.empty(), Optional.of(nodeAlias)));
+        }
+
         Binding lookup(org.uet.dse.ocl2cypher.core.CoreDeclaration declaration) {
             return scope.get(declaration);
         }
@@ -2181,6 +2227,15 @@ public final class Realization {
                 org.uet.dse.ocl2cypher.core.CoreDeclaration declaration) {
             Binding binding = lookup(declaration);
             return binding == null ? Optional.empty() : binding.exactCertificate;
+        }
+
+
+        Optional<String> nodeAlias(QNode.QExpr expression) {
+            if (!(expression instanceof QNode.QExpr.Variable variable)) {
+                return Optional.empty();
+            }
+            Binding binding = lookup(variable.declaration);
+            return binding == null ? Optional.empty() : binding.nodeAlias;
         }
 
         Ctx child() {

@@ -350,6 +350,7 @@ public abstract sealed class CoreExpr
 
     public enum UnaryOp {
         BOOLEAN_NOT,
+        OCL_IS_UNDEFINED,
         NUMERIC_NEGATE,
         NUMERIC_ABS,
         REAL_FLOOR,

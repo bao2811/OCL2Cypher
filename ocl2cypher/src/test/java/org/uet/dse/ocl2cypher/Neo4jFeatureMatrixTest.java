@@ -40,6 +40,9 @@ class Neo4jFeatureMatrixTest {
     private static List<Feature> features() {
         return List.of(
             new Feature("boolean_bottom", "self.flag", Set.of("no", "bottom")),
+            new Feature("is_undefined_missing", "self.text.oclIsUndefined()", Set.of("yes", "no")),
+            new Feature("is_undefined_present", "not self.text.oclIsUndefined()", Set.of("bottom")),
+            new Feature("is_undefined_defined_boolean", "self.flag.oclIsUndefined()", Set.of("yes", "no")),
             ok("or_masks_bottom", "true or self.flag"),
             new Feature("and_propagates_bottom", "true and self.flag", Set.of("no", "bottom")),
             ok("false_implies_bottom", "false implies self.flag"),
@@ -73,13 +76,6 @@ class Neo4jFeatureMatrixTest {
     }
     @TestFactory Stream<DynamicTest> frontendCoreQAndRealizationMatrix() { return cases(false); }
     @TestFactory Stream<DynamicTest> actualNeo4jMatrix() { return cases(true); }
-    @Test void undefinedOperationIsAnExplicitFrontendRejection() {
-        var result = FrontendCompiler.compile(
-                "context Probe inv Defined: not self.text.oclIsUndefined() and self.text <> ''", schema);
-        assertTrue(result.isFailure());
-        assertEquals(org.uet.dse.ocl2cypher.diagnostics.Stage.E_SM, result.primaryDiagnostic().stage());
-        assertEquals("E_RESOLUTION", result.primaryDiagnostic().code());
-    }
     private Stream<DynamicTest> cases(boolean live) {
         return features().stream().map(f -> DynamicTest.dynamicTest((live ? "NEO4J/" : "LOCAL/") + f.name(), () -> {
             if (live) Assumptions.assumeTrue("true".equalsIgnoreCase(System.getenv("OCL2CYPHER_RUN_NEO4J_E2E")));

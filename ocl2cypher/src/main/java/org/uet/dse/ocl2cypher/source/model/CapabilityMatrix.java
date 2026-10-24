@@ -81,6 +81,8 @@ public final class CapabilityMatrix {
 
         support(entries, OclOperation.BOOLEAN_NOT,
                 witness("not false", "CoreExpr.Unary", "QExpr.Unary"));
+        support(entries, OclOperation.OCL_IS_UNDEFINED,
+                witness("self.oclIsUndefined()", "CoreExpr.Unary", "QExpr.Unary"));
         support(entries, OclOperation.BOOLEAN_AND,
                 witness("true and false", "CoreExpr.Binary", "QExpr.Binary"));
         support(entries, OclOperation.BOOLEAN_OR,

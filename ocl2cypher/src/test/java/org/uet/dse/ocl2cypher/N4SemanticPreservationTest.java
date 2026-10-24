@@ -10,7 +10,7 @@ class N4SemanticPreservationTest {
     @Test
     void admittedElaboratedExpressionsAndLoweredCoreHaveTheSameDenotation() {
         N4SemanticPreservationCorpus.Counts counts = N4SemanticPreservationCorpus.run();
-        assertEquals(58, counts.expressions());
-        assertEquals(116, counts.objectEvaluations());
+        assertEquals(59, counts.expressions());
+        assertEquals(118, counts.objectEvaluations());
     }
 }

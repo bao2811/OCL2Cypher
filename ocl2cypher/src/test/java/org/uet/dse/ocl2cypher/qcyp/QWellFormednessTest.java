@@ -8,7 +8,7 @@ class QWellFormednessTest {
     @Test
     void productionTranslationConstructsWellFormedQAndRejectsMalformedTrees() {
         QWellFormednessCorpus.Counts counts = QWellFormednessCorpus.run();
-        assertEquals(58, counts.translatedTrees());
+        assertEquals(59, counts.translatedTrees());
         assertEquals(5, counts.directValidTrees());
         assertEquals(15, counts.rejectedMalformedTrees());
     }

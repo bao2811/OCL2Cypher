@@ -355,10 +355,14 @@ public final class CoreInterpreter {
 
     private static OclValue evalUnary(SchemaModel sm, Snapshot sn, Env env, CoreExpr.Unary u) {
         OclValue op = eval(sm, sn, env, u.operand);
+        if (u.operator == CoreExpr.UnaryOp.OCL_IS_UNDEFINED) {
+            return op.isBottom() ? Boolean3.TRUE : Boolean3.FALSE;
+        }
         if (op instanceof OclValue.BottomValue) {
             return new OclValue.BottomValue(u.type());
         }
         return switch (u.operator) {
+            case OCL_IS_UNDEFINED -> throw new IllegalStateException("handled before bottom propagation");
             case BOOLEAN_NOT -> Boolean3.not(op);
             case NUMERIC_NEGATE -> {
                 if (op instanceof OclValue.IntegerValue iv) {

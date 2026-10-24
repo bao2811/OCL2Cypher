@@ -342,6 +342,7 @@ public final class QValidator {
                                       OclType result, String path, Context context) {
         boolean valid = switch (operator) {
             case BOOLEAN_NOT -> operand.equals(OclType.BOOLEAN) && result.equals(OclType.BOOLEAN);
+            case OCL_IS_UNDEFINED -> result.equals(OclType.BOOLEAN);
             case NUMERIC_NEGATE, NUMERIC_ABS -> operand.isNumeric() && result.equals(operand);
             case REAL_FLOOR, REAL_ROUND -> operand.equals(OclType.REAL)
                     && result.equals(OclType.INTEGER);

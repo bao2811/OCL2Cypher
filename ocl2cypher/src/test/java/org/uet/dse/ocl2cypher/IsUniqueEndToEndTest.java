@@ -76,7 +76,10 @@ class IsUniqueEndToEndTest {
         assertTrue(realized.isSuccess(), () -> realized.diagnostics().toString());
         String cypher = Serializer.cypherText(realized.value());
         Neo4jCypherParserGate.assertParses(cypher);
-        assertTrue(cypher.contains("reduce("), "isUnique must use typed distinct reduction");
+        assertTrue(cypher.contains("COLLECT {UNWIND"),
+                "isUnique must use native grouping over the typed atomic carrier");
+        assertTrue(cypher.contains("RETURN DISTINCT"),
+                "isUnique must deduplicate its projection in Neo4j");
         assertTrue(cypher.contains("size("), "isUnique must compare certified cardinalities");
     }
 

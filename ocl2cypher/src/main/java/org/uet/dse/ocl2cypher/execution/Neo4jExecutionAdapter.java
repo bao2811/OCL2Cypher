@@ -16,6 +16,7 @@ import org.uet.dse.ocl2cypher.graph.GraphModel;
 import org.uet.dse.ocl2cypher.graph.GraphKey;
 import org.uet.dse.ocl2cypher.graph.GraphFingerprint;
 import org.uet.dse.ocl2cypher.graph.GraphObservation;
+import org.uet.dse.ocl2cypher.graph.Uml2GraphEncodingContract;
 import org.uet.dse.ocl2cypher.runtime.OclEquality;
 import org.uet.dse.ocl2cypher.runtime.OclType;
 import org.uet.dse.ocl2cypher.runtime.OclValue;
@@ -48,6 +49,19 @@ public final class Neo4jExecutionAdapter {
     private static final String MATERIALIZATION_VERSION = "2";
     private static final String TRANSIENT_STABLE_KEY = "_stableKey";
     private static final String GRAPH_FINGERPRINT = "graphFingerprint";
+    private static final List<String> RECOMMENDED_INDEXES = List.of(
+            "CREATE INDEX ocl2cypher_managed_model IF NOT EXISTS "
+                    + "FOR (n:`OCL2CypherManaged`) ON (n.`modelKey`)",
+            "CREATE INDEX ocl2cypher_object_model IF NOT EXISTS "
+                    + "FOR (n:`Object`) ON (n.`modelKey`)",
+            "CREATE INDEX ocl2cypher_object_model_use_id IF NOT EXISTS "
+                    + "FOR (n:`Object`) ON (n.`modelKey`, n.`use_id`)",
+            "CREATE INDEX ocl2cypher_class_model_key IF NOT EXISTS "
+                    + "FOR (n:`UmlClass`) ON (n.`modelKey`, n.`classKey`)",
+            "CREATE INDEX ocl2cypher_attribute_model_key IF NOT EXISTS "
+                    + "FOR (n:`Attribute`) ON (n.`modelKey`, n.`attributeKey`)",
+            "CREATE INDEX ocl2cypher_slot_model_key IF NOT EXISTS "
+                    + "FOR (n:`AttributeValue`) ON (n.`modelKey`, n.`attributeKey`)");
 
     enum MaterializationPhase {
         SCHEMA,
@@ -132,7 +146,10 @@ public final class Neo4jExecutionAdapter {
                                                   Map<String, Object> extraParams,
                                                   GraphModel graph) {
         try {
-            if (graph != null) requireCompatibleEncoding(session, graph);
+            if (graph != null) {
+                requireCanonicalGraph(graph);
+                requireCompatibleEncoding(session, graph);
+            }
             Serializer.Serialized s = Serializer.serialize(artifact);
             Map<String, Object> params = buildParamMap(s.parameters(), extraParams, graph);
             var rec = session.executeRead(tx -> tx.run(s.cypherText(), params).list());
@@ -171,6 +188,25 @@ public final class Neo4jExecutionAdapter {
         return database == null || database.isBlank() ? DEFAULT_DATABASE : database.trim();
     }
 
+    /**
+     * Install the physical indexes used by generated MATCH patterns. Indexes
+     * are deliberately outside the logical UML2Graph contract: they change no
+     * node, relationship, property, identity or query result. Callers opt in
+     * because schema-management privileges are not required for ordinary query
+     * execution.
+     */
+    public static void ensureRecommendedIndexes(Session session) {
+        Objects.requireNonNull(session, "Neo4j session");
+        for (String statement : RECOMMENDED_INDEXES) {
+            session.run(statement).consume();
+        }
+        session.run("CALL db.awaitIndexes(300)").consume();
+    }
+
+    static List<String> recommendedIndexStatements() {
+        return RECOMMENDED_INDEXES;
+    }
+
     private static Result<ExecutionResult> executeGraphMaterialized(Session session,
                                                                      ExecutionRequest req) {
         materializeGraph(session, req.graph());
@@ -185,6 +221,7 @@ public final class Neo4jExecutionAdapter {
      * the schema phase back as well.
      */
     public static boolean materializeGraph(Session session, GraphModel g) {
+        requireCanonicalGraph(g);
         return session.executeWrite(tx -> {
             // Refuse a namespace containing foreign nodes, then replace only our nodes.
             String fingerprint = GraphFingerprint.sha256(g);
@@ -235,6 +272,15 @@ public final class Neo4jExecutionAdapter {
                 model).consume();
             return Boolean.TRUE;
         });
+    }
+
+    private static void requireCanonicalGraph(GraphModel graph) {
+        Result<Uml2GraphEncodingContract.Witness> contract =
+                Uml2GraphEncodingContract.validate(graph);
+        if (contract.isFailure()) {
+            throw new IllegalArgumentException(contract.primaryDiagnostic().code()
+                    + ": " + contract.primaryDiagnostic().message());
+        }
     }
 
     private static void materializeNodes(TransactionContext tx, GraphModel graph,

@@ -153,7 +153,8 @@ public final class GraphObservation {
                     : acBinding.targetParticipant().physicalType();
             for (var participant : g.incoming(srcKey, receiverEdge)) {
                 if (!assoc.key().equals(
-                        participant.properties().get("associationKey"))) {
+                        participant.properties().get(
+                                Uml2GraphEncodingContract.Property.ASSOCIATION_KEY))) {
                     continue;
                 }
                 if (!qualifiers.isEmpty()
@@ -162,9 +163,12 @@ public final class GraphObservation {
                     continue;
                 }
                 for (var result : g.outgoing(participant.sourceKey(), resultEdge)) {
-                    if (!assoc.key().equals(result.properties().get("associationKey"))
+                    if (!assoc.key().equals(result.properties().get(
+                            Uml2GraphEncodingContract.Property.ASSOCIATION_KEY))
                             || !navigation.roleName().equals(result.properties().get(
-                                    reverse ? "sourceRole" : "targetRole"))) {
+                                    reverse
+                                            ? Uml2GraphEncodingContract.Property.SOURCE_ROLE
+                                            : Uml2GraphEncodingContract.Property.TARGET_ROLE))) {
                         continue;
                     }
                     out.add(g.node(result.targetKey()).properties().get("objectKey"));
@@ -178,7 +182,8 @@ public final class GraphObservation {
                 ? g.incoming(srcKey, associationBinding.link().physicalType())
                 : g.outgoing(srcKey, associationBinding.link().physicalType());
         for (var r : rels) {
-            if (!assoc.key().equals(r.properties().get("associationKey"))) {
+            if (!assoc.key().equals(r.properties().get(
+                    Uml2GraphEncodingContract.Property.ASSOCIATION_KEY))) {
                 continue;
             }
             if (!qualifiers.isEmpty()
@@ -221,10 +226,11 @@ public final class GraphObservation {
         for (var edge : g.incoming(
                 GraphKey.object(g.modelKey(), participantStableId), participantType)) {
             if (!navigation.association().key().equals(
-                    edge.properties().get("associationKey"))
+                    edge.properties().get(Uml2GraphEncodingContract.Property.ASSOCIATION_KEY))
                     || !navigation.participantRole().equals(edge.properties().get(
                             navigation.receiverIsTarget()
-                                    ? "targetRole" : "sourceRole"))) {
+                                    ? Uml2GraphEncodingContract.Property.TARGET_ROLE
+                                    : Uml2GraphEncodingContract.Property.SOURCE_ROLE))) {
                 continue;
             }
             if (!qualifiers.isEmpty()

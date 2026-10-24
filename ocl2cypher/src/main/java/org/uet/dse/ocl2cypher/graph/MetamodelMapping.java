@@ -118,22 +118,29 @@ public final class MetamodelMapping {
     public static MetamodelMapping canonical() {
         Map<NodeKind, NodeBinding> nodes = new EnumMap<>(NodeKind.class);
         nodes.put(NodeKind.MODEL, node(NodeKind.MODEL,
-                GraphModel.Projection.REPOSITORY_CONTROL, "MODEL_ROOT", "Model",
+                GraphModel.Projection.REPOSITORY_CONTROL, "MODEL_ROOT",
+                Uml2GraphEncodingContract.Label.MODEL,
                 KeyKind.MODEL_KEY));
         nodes.put(NodeKind.CLASS, node(NodeKind.CLASS,
-                GraphModel.Projection.SCHEMA, "UML_CLASS", "UmlClass",
+                GraphModel.Projection.SCHEMA, "UML_CLASS",
+                Uml2GraphEncodingContract.Label.UML_CLASS,
                 KeyKind.CLASS_KEY));
         nodes.put(NodeKind.ATTRIBUTE, node(NodeKind.ATTRIBUTE,
-                GraphModel.Projection.SCHEMA, "ATTRIBUTE_DECLARATION", "Attribute",
+                GraphModel.Projection.SCHEMA, "ATTRIBUTE_DECLARATION",
+                Uml2GraphEncodingContract.Label.ATTRIBUTE,
                 KeyKind.ATTRIBUTE_KEY));
         nodes.put(NodeKind.OBJECT, node(NodeKind.OBJECT,
-                GraphModel.Projection.INSTANCE, "OBJECT", "Object", KeyKind.OBJECT_KEY));
+                GraphModel.Projection.INSTANCE, "OBJECT",
+                Uml2GraphEncodingContract.Label.OBJECT, KeyKind.OBJECT_KEY));
         nodes.put(NodeKind.ASSOCIATION_CLASS_OBJECT,
                 new NodeBinding(NodeKind.ASSOCIATION_CLASS_OBJECT,
                         GraphModel.Projection.INSTANCE, "ASSOCIATION_CLASS_OBJECT",
-                        List.of("Object", "AssociationClassObject"), KeyKind.OBJECT_KEY));
+                        List.of(Uml2GraphEncodingContract.Label.OBJECT,
+                                Uml2GraphEncodingContract.Label.ASSOCIATION_CLASS_OBJECT),
+                        KeyKind.OBJECT_KEY));
         nodes.put(NodeKind.ATTRIBUTE_VALUE, node(NodeKind.ATTRIBUTE_VALUE,
-                GraphModel.Projection.INSTANCE, "ATTRIBUTE_VALUE", "AttributeValue",
+                GraphModel.Projection.INSTANCE, "ATTRIBUTE_VALUE",
+                Uml2GraphEncodingContract.Label.ATTRIBUTE_VALUE,
                 KeyKind.SLOT_KEY));
 
         Map<RelationshipKind, RelationshipBinding> relationships =

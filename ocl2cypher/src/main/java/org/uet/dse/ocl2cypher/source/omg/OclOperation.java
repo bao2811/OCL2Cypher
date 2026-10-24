@@ -3,6 +3,7 @@ package org.uet.dse.ocl2cypher.source.omg;
 /** Closed operation vocabulary carried by resolved OMG-AS OperationCallExp nodes. */
 public enum OclOperation {
     BOOLEAN_NOT,
+    OCL_IS_UNDEFINED,
     BOOLEAN_AND,
     BOOLEAN_OR,
     BOOLEAN_XOR,

@@ -1,0 +1,320 @@
+= Thực nghiệm OCL2Cypher trên corpus `example`
+
+Phần thực nghiệm này tách khỏi unit test. Đơn vị phân tích là một lần đánh giá
+`invariant × snapshot`, và kết quả quan sát là tập stable object ID vi phạm.
+Maven wall time và các cột thời gian một lần chạy chỉ là metadata kiểm toán,
+không được dùng để tuyên bố latency, throughput hoặc scalability.
+
+== Câu hỏi đánh giá
+
+1. **RQ1 — semantic agreement:** USE evaluator và Q interpreter trên graph chuẩn
+   có trả cùng tập violation ID cho các invariant được chấp nhận không?
+2. **RQ2 — fail-closed boundary:** các cấu trúc ngoài profile có bị từ chối với
+   diagnostic đã khai báo thay vì bị xấp xỉ âm thầm không?
+3. **RQ3 — live deployment:** generated Cypher 5 có trả cùng violation ID với
+   USE khi chạy trên một Neo4j thật không?
+
+USE core/evaluator là source oracle. Expected CSV được dùng như một lớp kiểm
+toán corpus bổ sung, không thay thế USE và không được dùng làm target oracle.
+
+== Corpus thực thi
+
+[cols="2,1,1,4", options="header"]
+|===
+|Subject |Invariant |Admitted |Đặc trưng chính
+|Shop |2 |2 |USE/SOIL cơ bản
+|Advanced adapters |3 |3 |qualifier, association class
+|Company |26 |22 |inheritance, navigation, collections
+|Comprehensive |30 |27 |primitive types, iterators, type operations
+|Medical |36 |36 |bottom, Set/Bag, nested iterators
+|CarRental UMLMM |25 |25 |domain case study, 14 binary associations
+|Families |10 |10 |reverse navigation, family roles
+|Persons |10 |10 |inheritance, allInstances, type tests
+|*Tổng* |*142* |*135* |
+|===
+
+Sáu invariant còn lại là rejection có chủ đích: hai phép `intersection` trên
+receiver không phải Set, hai phép `union` trộn `Set(Integer)` với `Set(Real)`,
+và hai lần đọc Real chưa có exact-realization certificate. Ba input boundary
+khác kiểm tra operation declaration, pre/postcondition và một link sai kiểu
+trong fixture Library.
+
+`Company::UniqueEmployeeNames` dùng `isUnique`, nằm ngoài `Supported`, nên được
+ghi `EXCLUDED_OUT_OF_SCOPE`: không sinh query và không tham gia so sánh USE/Q/Neo4j.
+Unit test của extension này vẫn được giữ riêng và không được tính là thực nghiệm.
+
+`example/case-study-oclcypher/library.soil` không được đưa vào mẫu agreement vì
+dòng 55 chèn `book1 : Book` vào đầu cần `Branch` của `LoanBranch`. Runner ghi
+fixture này là một input-boundary rejection, không tự sửa dữ liệu nguồn.
+
+Hai expected CSV hiện khác USE tại:
+
+- `Company::DistinctProjectionCardinality`;
+- `Department::DistinctProjectionCardinality`.
+
+Trong OCL, `collect` ở hai biểu thức này giữ multiplicity nên USE trả tập vi
+phạm rỗng. Sai lệch được ghi ở cột `reviewedCsvStatus=MISMATCH`; denominator
+agreement vẫn lấy trực tiếp từ USE.
+
+== Chạy thực nghiệm
+
+Chạy RQ1/RQ2, không cần Neo4j:
+
+[source,powershell]
+----
+pwsh -File ocl2cypher/scripts/Run-ExampleCorpusExperiment.ps1
+----
+
+Chạy thêm RQ3 trên một database dùng cho thử nghiệm:
+
+[source,powershell]
+----
+$env:NEO4J_URI = 'bolt://localhost:7687'
+$env:NEO4J_DB = 'neo4j'
+$env:NEO4J_USER = 'neo4j'
+$env:NEO4J_PASSWORD = '<secret>'
+
+pwsh -File ocl2cypher/scripts/Run-ExampleCorpusExperiment.ps1 `
+  -EnableNeo4j -ConfirmDisposableDatabase
+----
+
+Có thể truyền `-EnvFile path/to/private.env`. File này chỉ được đọc bốn khóa
+trên và không được sao chép vào evidence. Mỗi subject dùng một `modelKey` riêng;
+cleanup chỉ xóa node có đúng `modelKey` đó.
+
+== Artifact đầu ra
+
+Mỗi lần chạy tạo một thư mục dưới `ocl2cypher/target/experiments/<run-id>/`:
+
+- `manifest.json`: revision, trạng thái working tree và kích thước corpus;
+- `inputs-before.json`, `inputs-after.json`: SHA-256 để phát hiện input thay đổi;
+- `subjects.csv`: kích thước schema, snapshot và graph của từng subject;
+- `invariants.csv`: USE/Q/Neo4j IDs, trạng thái agreement và query size;
+- `boundaries.csv`: rejection code và message;
+- `queries/`: toàn bộ generated Cypher đã thực sự tham gia so sánh;
+- `summary.json`, `outcome.json`: số đếm và kết luận của lần chạy;
+- `neo4j-components.txt`: version/edition do server tự báo, chỉ có ở live mode;
+- `surefire/`: raw JUnit XML.
+
+Một run hợp lệ phải có input hash trước/sau giống nhau, `failureCount = 0`,
+`135` local comparisons, `1` out-of-scope exclusion, `6` invariant rejections
+và `9` tổng boundary rejections. Live run còn phải có đủ `135` USE–Neo4j
+comparisons, không skip.
+
+Các số trên là bằng chứng hữu hạn cho corpus và profile hiện tại; chúng không
+thay thế định lý bảo toàn và không khái quát cho toàn bộ UML/OCL hoặc mọi phiên
+bản Neo4j.
+
+== Thực nghiệm thời gian và tăng kích thước instance
+
+Scale experiment sinh các snapshot Company conform với số `Person` tăng dần.
+Mỗi snapshot có một `Company`, một link `Employment` cho mỗi person, inheritance
+`Person <- Employee <- Manager`, và một link quản lý. Corpus có 26 invariant:
+22 query thuộc `Supported` được kiểm tra lại với USE và Q trước khi đo, 3
+invariant giữ nguyên expected rejection boundary, và
+`Company::UniqueEmployeeNames` là extension `isUnique` nằm ngoài `Supported`
+nên không tham gia correctness/performance experiment.
+
+[source,powershell]
+----
+pwsh -File ocl2cypher/scripts/Run-ScalabilityExperiment.ps1 `
+  -EnvFile .env -ConfirmDisposableDatabase `
+  -Sizes '50,200,500' -Warmups 3 -Repetitions 10 `
+  -QueryTimeoutSeconds 60
+----
+
+Các phase được đo riêng: sinh input, USE evaluation, input load, graph build,
+full-pipeline compilation, Neo4j materialization, correctness validation,
+warm-up, measured queries và cleanup. Từ phép đo 2026-10-22, `elapsedNanos`
+trong `query-samples.csv` là thời gian Neo4j server báo cáo:
+`resultAvailableAfter + resultConsumedAfter`, sau khi toàn bộ kết quả được đọc.
+Hai thành phần được ghi ở `serverAvailableNanos` và `serverConsumedNanos`.
+`clientElapsedNanos` ghi riêng thời gian lời gọi `executeRaw`, gồm dựng tham số,
+read transaction, trao đổi qua driver, fetch và chuyển thành tập violation ID.
+Đây là server-reported result time, không phải CPU time thuần túy. Cả hai không
+bao gồm compile, graph validation, serialization hay materialization.
+`query-aggregates.csv` chứa min, p50, p95,
+max và mean theo invariant/kích thước cùng một dòng `__ALL__` cho toàn workload.
+Các file tương ứng tiền tố `use-query-` chứa mẫu USE, còn
+`backend-comparison.csv` ghép thống kê và tỷ lệ Neo4j/USE theo cùng invariant.
+
+Đây là workload sinh xác định, phù hợp làm thực nghiệm prototype và phát hiện
+xu hướng. Không nên diễn giải nó như benchmark công nghiệp hoặc khẳng định
+scalability ngoài các kích thước đã đo.
+
+=== Kết quả chạy tham chiếu ngày 2026-10-21
+
+Các bảng dưới đây dùng bộ đếm *cũ* (client end-to-end) và chỉ là pilot lịch sử;
+không so sánh trực tiếp các số này với `elapsedNanos` của run mới.
+
+Run `20261021-141249-20fc9cc0e8474e1fb458eaf6092cdb61` chạy trên Neo4j
+`2026.06.0 Enterprise`, Cypher 5. Benchmark cài và chờ các index được khuyến nghị,
+dùng ba warm-up, mười lần đo và timeout 60 giây cho mỗi query. Tổng cộng có
+`660 = 3 x 22 x 10` mẫu cho mỗi backend, không failure và không timeout. Không
+có query hay sample nào của `isUnique`.
+
+[cols="1,1,1,1,1,1,1", options="header"]
+|===
+|Person |Graph node |Graph relationship |Compile (ms) |Materialize (ms)
+|Neo4j p50 (ms) |Neo4j p95 (ms)
+|50  |296  |577  |1098.196  |1162.154  |7.633   |16.887
+|200 |1128 |2241 |3449.421  |2874.360  |38.957  |139.530
+|500 |2793 |5571 |24073.181 |14571.881 |212.306 |708.102
+|===
+
+Compile và materialize là một quan sát cho mỗi kích thước. Các percentile query
+gộp 22 invariant có chi phí rất khác nhau; vì vậy dòng tổng hợp không tự nó biểu
+diễn đường tăng trưởng của một invariant. `query-aggregates.csv` lưu thống kê
+riêng theo invariant để phân tích scalability.
+
+=== So sánh OCL trên USE và Cypher trên Neo4j
+
+Hai backend đánh giá cùng 22 invariant thuộc `Supported` và đều dựng đầy đủ tập
+violation ID. USE được đo sau khi model và SOIL đã nạp; Neo4j được đo sau khi graph
+đã materialize. Bảng pilot dưới đây tính cả driver round trip, server execution
+và truyền kết quả cho Neo4j, trong khi USE chạy trong cùng JVM.
+
+[cols="1,1,1,1,1,1,1", options="header"]
+|===
+|Person |USE p50 (ms) |Neo4j p50 (ms) |Neo4j/USE p50
+|USE p95 (ms) |Neo4j p95 (ms) |Neo4j/USE p95
+|50  |0.066 |7.633   |114.95  |0.220 |16.887  |76.90
+|200 |0.124 |38.957  |313.66  |0.551 |139.530 |253.28
+|500 |0.206 |212.306 |1029.11 |0.892 |708.102 |793.93
+|===
+
+Các tỷ lệ mô tả latency end-to-end quan sát được của hai kiến trúc thực thi khác
+nhau, không chỉ riêng chi phí đánh giá biểu thức. USE vẫn nhanh hơn trên workload
+nhỏ, in-memory này. Việc tái sử dụng alias của `self` và index
+`(modelKey, use_id)` loại bỏ các phép tìm lại object không cần thiết. Quan trọng
+hơn, pha correctness validation không còn chạy lại graph
+validation/fingerprint/serialization cho từng invariant: ở mức 500 pha này còn
+`8.220` giây, thay vì khoảng `4.37` giờ của pilot.
+
+Pilot cũ không được dùng làm kết quả publication: nó đã đưa `isUnique` ngoài
+`Supported` vào workload và lặp graph validation/fingerprint/serialization cho
+từng invariant. Bốn query collection ở context `Company` vẫn là nhóm chậm nhất
+(p50 khoảng `410`–`1106` ms tại 500 Person), vì phải materialize collection và
+đọc các `AttributeValue` tương quan. Hai run liên tiếp còn cho p50 tổng hợp tại
+500 Person lần lượt là `18.525` ms và `212.306` ms, cho thấy ảnh hưởng lớn của
+trạng thái server/cache và việc gộp các query không đồng nhất. Vì vậy không dùng
+một p50 gộp để tuyên bố Neo4j nhanh hơn hoặc có đường tăng trưởng cụ thể. Đây là
+điểm tối ưu và kiểm soát thực nghiệm tiếp theo; kết luận publication cần nhiều
+run độc lập, thứ tự query được kiểm soát và báo cáo theo từng invariant.
+
+=== Đo lại bằng thời gian server báo cáo ngày 2026-10-22
+
+Run `20261022-171213-63c8b767391049aba18a15087e06e412` dùng 3 warm-up,
+10 lần đo cho mỗi invariant/kích thước và không dùng `PROFILE` trong phép đo.
+Cả hai backend có 660 mẫu, 22 invariant/kích thước, không mismatch hoặc timeout.
+`backend-comparison.csv` so sánh USE `elapsedNanos` với Neo4j
+`resultAvailableAfter + resultConsumedAfter`; `clientElapsedNanos` là số đo phụ
+tính toàn bộ lời gọi ở phía ứng dụng.
+
+[cols="1,1,1,1", options="header"]
+|===
+|Person |USE p50 (ms) |Neo4j server-reported p50 (ms) |Neo4j client p50 (ms)
+|50  |0.088 |5   |8.107
+|200 |0.166 |8   |10.400
+|500 |0.229 |236 |241.730
+|===
+
+Ở 500 Person, việc bỏ thời gian phía ứng dụng không xóa chênh lệch lớn;
+phần lớn độ trễ quan sát được nằm trong các mốc server báo cáo. Đây vẫn là
+thời gian tạo/tiêu thụ kết quả, không phải CPU time thuần túy của Cypher.
+Các mốc server có độ phân giải mili-giây và không cùng đồng hồ với
+`clientElapsedNanos`, vì vậy không lấy hiệu hai cột để ước lượng chính xác
+chi phí driver. USE vẫn là thời gian đo trong JVM còn Neo4j là thời gian server
+báo cáo, nên đây không phải phép so sánh hai bộ đếm đồng nhất hoàn toàn.
+P50 gộp 22 invariant có độ phức tạp khác nhau; cần xem thống kê
+theo từng invariant trước khi đưa ra kết luận về scalability.
+
+=== Nấc lớn hơn: 1.000 và 2.000 Person
+
+Hai run riêng ngày 2026-10-22 dùng 1 warm-up, 3 lần đo cho mỗi invariant,
+timeout 120 giây. Cả hai PASS, mỗi backend có 66 mẫu/run, không mismatch hoặc
+timeout. Các run dùng ít lần lặp hơn bảng 50--500 ở trên nên chỉ là pilot.
+
+[cols="1,1,1,1,1,1,1", options="header"]
+|===
+|Person |USE p50 (ms) |Neo4j server p50 (ms) |Neo4j server p95 (ms)
+|Compile (s) |Materialize (s) |Tổng run (phút:giây)
+|1.000 |0,700 |29 |1698 |97,546 |97,316 |4:26
+|2.000 |1,234 |51 |3357 |553,225 |503,497 |19:40
+|===
+
+Run 1.000: `20261022-172436-05a9346af6a7464693f579b6420e3f86`.
+Run 2.000: `20261022-172938-5481ecbeca06435b9195cd4a49f46a0f`.
+Ở 2.000 Person, `Company::AllEmployeesWorkingAge` có p50 6,218 giây và
+`Company::EmployeePartition` có p50 3,346 giây. P50 gộp 1.000 và 2.000 lại
+thấp hơn run 500 riêng trước đó; không thể suy ra đường tăng trưởng đơn điệu
+từ các run khác trạng thái server và chỉ ba lần lặp. Runner hiện giới hạn
+20.000 Person. Chạy nguyên pipeline ở 10.000 cần ngân sách thời gian và cách
+kiểm soát từng pha riêng; 50.000 còn vượt giới hạn đầu vào hiện tại. Không
+ngoại suy thời gian từ hai run này sang các kích thước chưa đo.
+
+=== Dò ngưỡng thực tế với `-LargeMode`
+
+`-LargeMode` tái sử dụng graph đã dựng/kiểm tra một lần khi biên dịch 22
+invariant và tạo index `(modelKey, _stableKey)` cho endpoint tạm trong pha
+materialization. Luật graph, văn bản Cypher, Q cross-check và so sánh USE/Neo4j
+không đổi. Index benchmark vẫn tồn tại trong schema Neo4j sau cleanup dữ liệu;
+`_stableKey` trên các node thí nghiệm được xóa trước khi commit. Tại 2.000
+Person, cả 22 tệp Cypher có checksum giống run thường.
+Thời gian compilation giảm từ 553,225 xuống 67,108 giây và materialization
+từ 503,497 xuống 151,809 giây giữa hai run khác trạng thái server; không
+quy toàn bộ chênh lệch cho riêng index nếu chưa đo kiểm soát.
+
+[source,powershell]
+----
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File ocl2cypher/scripts/Run-ScalabilityExperiment.ps1 `
+  -EnvFile .env -ConfirmDisposableDatabase -Sizes '4000' `
+  -Warmups 1 -Repetitions 3 -QueryTimeoutSeconds 120 -LargeMode
+----
+
+Run 4.000 `20261022-180029-2393122ffe6d400587281a6e3c2538aa` PASS:
+22.218 node, 44.421 relationship; 66 mẫu mỗi backend, không mismatch/timeout.
+USE p50 gộp 1,995 ms; Neo4j server-reported p50 gộp 84 ms,
+p95 11,677 giây.
+`AllEmployeesWorkingAge` p50 riêng 25,471 giây. Compilation 439,077 giây,
+materialization 676,491 giây, toàn run 27 phút 29 giây. Đây là nấc lớn nhất
+đã hoàn tất, *không phải* ngưỡng timeout của Neo4j. 10.000 và 50.000 chưa
+được đo; 50.000 còn vượt giới hạn 20.000 của runner. Không ngoại suy p50 hay
+thời gian chuẩn bị từ 4.000 lên những mức chưa chạy.
+
+=== Chẩn đoán PROFILE ngày 2026-10-22 (không dùng làm kết quả publication)
+
+Tham số `-ProfileQueries` chạy `PROFILE` cho năm invariant đại diện *sau* khi
+hoàn tất các mẫu thời gian, rồi ghi `diagnostic-profiles.csv`. Nó không thay đổi
+phạm vi `Supported` và không trộn chi phí PROFILE vào `query-samples.csv`.
+
+[source,powershell]
+----
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File ocl2cypher/scripts/Run-ScalabilityExperiment.ps1 `
+  -EnvFile .env -ConfirmDisposableDatabase -Sizes '50,200,500' `
+  -Warmups 1 -Repetitions 2 -ProfileQueries
+----
+
+Hai run chẩn đoán riêng tại 50/200 và 500 Person đều PASS (44 mẫu tại 50/200,
+44 mẫu tại 500, không failure). Các query được chọn có cùng SHA-256 qua ba
+kích thước. `PROFILE` ghi nhận số DB hits sau; đây là phép đo công việc của
+database, không phải thời gian hay số lần đọc đĩa.
+
+[cols="3,1,1,1", options="header"]
+|===
+|Invariant |50 Person |200 Person |500 Person
+|`Company::AllEmployeesWorkingAge` |24,270 |367,020 |1,902,141
+|`Person::Adult` |6,072 |84,222 |24,438
+|`Company::EmployeePartition` |49,484 |737,834 |70,188
+|===
+
+Ở cả ba kích thước, `Projection` là operator chứa gần như toàn bộ DB hits;
+đường index ở phần chọn context có rất ít hits. `PROFILE` không ghi nhận
+page-cache miss cho các query này. Văn bản Cypher của
+`Company::AllEmployeesWorkingAge` duyệt collection người lao động và, với mỗi
+phần tử, truy vấn lại `Object`/`AttributeValue` theo ID để đọc `age`; vì vậy
+chi phí graph lookup và biểu diễn OCL được lặp nhiều lần. Số hits của
+`Person::Adult` và `Company::EmployeePartition` không tăng đều giữa các run,
+cho thấy cần kiểm soát trạng thái server và quan sát plan chi tiết hơn trước
+khi kết luận một đường tăng trưởng. Các run này dùng 1 warm-up và 1--2 lần đo,
+nên chỉ phục vụ chẩn đoán, không thay các số p50/p95 ở trên.

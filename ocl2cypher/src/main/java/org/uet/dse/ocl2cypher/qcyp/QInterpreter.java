@@ -411,6 +411,7 @@ public final class QInterpreter {
                                       org.uet.dse.ocl2cypher.core.CoreExpr.UnaryOp uop,
                                       OclType rt) {
         return switch (uop) {
+            case OCL_IS_UNDEFINED -> op.isBottom() ? Boolean3.TRUE : Boolean3.FALSE;
             case BOOLEAN_NOT -> OclOps.boolNot(op);
             case NUMERIC_NEGATE -> OclOps.negate(op, rt);
             case NUMERIC_ABS -> OclOps.abs(op, rt);

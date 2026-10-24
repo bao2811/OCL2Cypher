@@ -16,6 +16,17 @@ import static org.junit.jupiter.api.Assertions.*;
 class Neo4jExecutionAdapterTest {
 
     @Test
+    void recommendedIndexesCoverEveryGeneratedModelScopedLookupKey() {
+        String ddl = String.join("\n",
+                Neo4jExecutionAdapter.recommendedIndexStatements());
+        assertTrue(ddl.contains("`Object`) ON (n.`modelKey`, n.`use_id`)"));
+        assertTrue(ddl.contains("`UmlClass`) ON (n.`modelKey`, n.`classKey`)"));
+        assertTrue(ddl.contains("`Attribute`) ON (n.`modelKey`, n.`attributeKey`)"));
+        assertTrue(ddl.contains("`AttributeValue`) ON (n.`modelKey`, n.`attributeKey`)"));
+        assertTrue(ddl.contains("`OCL2CypherManaged`) ON (n.`modelKey`)"));
+    }
+
+    @Test
     void materializationUsesManagementLabelAndKeepsCaptionPropertiesVisible() {
         GraphModel graph = new GraphModel("FamiliesValidation");
         GraphModel.Node object = new GraphModel.Node(

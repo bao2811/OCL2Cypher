@@ -7,7 +7,7 @@ class CoreWellFormednessTest {
     @Test
     void productionCatalogueIsWellFormedAndMalformedTreesAreRejected() {
         CoreWellFormednessCorpus.Counts counts = CoreWellFormednessCorpus.run();
-        assertEquals(55, counts.acceptedProductionTrees());
+        assertEquals(56, counts.acceptedProductionTrees());
         assertEquals(14, counts.rejectedMalformedTrees());
     }
 }

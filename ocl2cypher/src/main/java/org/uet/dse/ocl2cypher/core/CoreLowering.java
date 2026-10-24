@@ -368,6 +368,7 @@ public final class CoreLowering {
     private static CoreExpr.UnaryOp mapUnary(OclOperation op) {
         return switch (op) {
             case BOOLEAN_NOT -> CoreExpr.UnaryOp.BOOLEAN_NOT;
+            case OCL_IS_UNDEFINED -> CoreExpr.UnaryOp.OCL_IS_UNDEFINED;
             case NUMERIC_NEGATE -> CoreExpr.UnaryOp.NUMERIC_NEGATE;
             case NUMERIC_ABS -> CoreExpr.UnaryOp.NUMERIC_ABS;
             case REAL_FLOOR -> CoreExpr.UnaryOp.REAL_FLOOR;

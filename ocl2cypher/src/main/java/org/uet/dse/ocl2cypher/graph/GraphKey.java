@@ -32,7 +32,7 @@ public final class GraphKey {
         }
     }
 
-    private static final String VERSION = "GraphKey-v1";
+    private static final String VERSION = Uml2GraphEncodingContract.KEY_VERSION;
 
     private GraphKey() {
     }
@@ -95,6 +95,36 @@ public final class GraphKey {
         } catch (IllegalArgumentException malformed) {
             return false;
         }
+    }
+
+    /**
+     * Decode and check the closed canonical key shape used by graph artifacts.
+     * The generic {@link #of(String, Kind, String...)} encoder remains useful
+     * for injectivity tests, while production graph elements pass this stricter
+     * boundary before they can be materialized.
+     */
+    public static Decoded requireCanonical(String encoded, String expectedModelKey) {
+        Decoded decoded = decode(encoded);
+        if (!Objects.equals(expectedModelKey, decoded.modelKey())) {
+            throw new IllegalArgumentException("graph key belongs to model '"
+                    + decoded.modelKey() + "', expected '" + expectedModelKey + "'");
+        }
+        int expected = expectedComponentCount(decoded.kind());
+        if (decoded.components().size() != expected) {
+            throw new IllegalArgumentException("graph key kind " + decoded.kind()
+                    + " requires " + expected + " component(s), found "
+                    + decoded.components().size());
+        }
+        return decoded;
+    }
+
+    public static int expectedComponentCount(Kind kind) {
+        return switch (Objects.requireNonNull(kind, "kind")) {
+            case MODEL, CLASS, ATTRIBUTE, ASSOCIATION, OBJECT, OBJECT_TYPING -> 1;
+            case GENERALIZATION, CLASS_ATTRIBUTE, ASSOCIATION_END, SLOT,
+                    SLOT_OWNERSHIP, SLOT_TYPING, LINK,
+                    ASSOCIATION_CLASS_PARTICIPANT -> 2;
+        };
     }
 
     public static String model(String modelKey) {

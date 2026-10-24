@@ -875,6 +875,7 @@ final class OclFrontend {
         if (args.size() == 0) {
             OclOperation u = switch (name) {
                 case "not" -> OclOperation.BOOLEAN_NOT;
+                case "oclIsUndefined" -> OclOperation.OCL_IS_UNDEFINED;
                 case "abs" -> OclOperation.NUMERIC_ABS;
                 case "floor" -> OclOperation.REAL_FLOOR;
                 case "round" -> OclOperation.REAL_ROUND;
@@ -898,6 +899,7 @@ final class OclFrontend {
             }
             switch (u) {
                 case BOOLEAN_NOT -> requireBoolean(rt, sp);
+                case OCL_IS_UNDEFINED -> { /* defined for every resolved receiver type */ }
                 case NUMERIC_ABS -> requireNumeric(rt, sp);
                 case REAL_FLOOR, REAL_ROUND -> requireReal(rt, sp);
                 case COLLECTION_SIZE, COLLECTION_IS_EMPTY, COLLECTION_NOT_EMPTY ->
@@ -909,7 +911,7 @@ final class OclFrontend {
                 default -> throw error("E_RESOLUTION", "unhandled op " + u, sp);
             }
             OclType result = switch (u) {
-                case BOOLEAN_NOT -> OclType.BOOLEAN;
+                case BOOLEAN_NOT, OCL_IS_UNDEFINED -> OclType.BOOLEAN;
                 case REAL_FLOOR, REAL_ROUND -> OclType.INTEGER;
                 case NUMERIC_ABS -> rt;
                 case COLLECTION_SIZE -> OclType.INTEGER;

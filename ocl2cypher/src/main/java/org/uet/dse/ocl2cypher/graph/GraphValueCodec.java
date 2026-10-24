@@ -21,12 +21,12 @@ import org.uet.dse.ocl2cypher.source.model.Snapshot;
  */
 public final class GraphValueCodec {
 
-    public static final String VALUE_STATE = "valueState";
-    public static final String VALUE_TYPE = "valueType";
-    public static final String CODEC_ID = "codecId";
-    public static final String PAYLOAD = "value";
-    public static final String DEFINED = "DEFINED";
-    public static final String BOTTOM = "BOTTOM";
+    public static final String VALUE_STATE = Uml2GraphEncodingContract.Codec.VALUE_STATE;
+    public static final String VALUE_TYPE = Uml2GraphEncodingContract.Codec.VALUE_TYPE;
+    public static final String CODEC_ID = Uml2GraphEncodingContract.Codec.CODEC_ID;
+    public static final String PAYLOAD = Uml2GraphEncodingContract.Codec.PAYLOAD;
+    public static final String DEFINED = Uml2GraphEncodingContract.Codec.DEFINED;
+    public static final String BOTTOM = Uml2GraphEncodingContract.Codec.BOTTOM;
 
     private GraphValueCodec() {
     }
@@ -191,11 +191,11 @@ public final class GraphValueCodec {
     public static String codecId(OclType type) {
         requireAtomic(type);
         return switch (type.kind()) {
-            case BOOLEAN -> "ocl-boolean-v1";
-            case INTEGER -> "ocl-integer-decimal-v1";
-            case REAL -> "ocl-real-decimal-v1";
-            case STRING -> "ocl-string-v1";
-            case CLASS -> "ocl-object-reference-v1";
+            case BOOLEAN -> Uml2GraphEncodingContract.Codec.BOOLEAN;
+            case INTEGER -> Uml2GraphEncodingContract.Codec.INTEGER;
+            case REAL -> Uml2GraphEncodingContract.Codec.REAL;
+            case STRING -> Uml2GraphEncodingContract.Codec.STRING;
+            case CLASS -> Uml2GraphEncodingContract.Codec.OBJECT_REFERENCE;
             case SET, BAG -> throw error("G_CODEC_UNSUPPORTED_TYPE",
                     "collection-valued attributes are outside the graph codec profile");
         };

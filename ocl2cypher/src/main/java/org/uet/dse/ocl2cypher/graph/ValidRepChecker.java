@@ -32,18 +32,26 @@ public final class ValidRepChecker {
 
     public static Result<Witness> check(SchemaModel sm, Snapshot sn, GraphModel g) {
         try {
+            Result<Uml2GraphEncodingContract.Witness> contract =
+                    Uml2GraphEncodingContract.validate(g);
+            if (contract.isFailure()) {
+                return failure(contract.primaryDiagnostic().code(),
+                        contract.primaryDiagnostic().message());
+            }
             if (!sm.modelKey().equals(g.modelKey())) {
                 return failure("VALIDREP_MODEL_KEY", "schema and graph modelKey differ");
             }
             for (GraphModel.Node n : g.nodes()) {
                 if (!g.modelKey().equals(n.modelKey())
-                        || !g.modelKey().equals(n.properties().get("modelKey"))) {
+                        || !g.modelKey().equals(n.properties().get(
+                                Uml2GraphEncodingContract.Property.MODEL_KEY))) {
                     return failure("VALIDREP_MODEL_SCOPE", "node outside model scope: " + n.stableKey());
                 }
             }
             for (GraphModel.Relationship r : g.relationships()) {
                 if (!g.modelKey().equals(r.modelKey())
-                        || !g.modelKey().equals(r.properties().get("modelKey"))) {
+                        || !g.modelKey().equals(r.properties().get(
+                                Uml2GraphEncodingContract.Property.MODEL_KEY))) {
                     return failure("VALIDREP_MODEL_SCOPE",
                             "relationship outside model scope: " + r.stableKey());
                 }
@@ -77,8 +85,10 @@ public final class ValidRepChecker {
                 String expectedRole = sm.clazz(o.dynamicClassKey()).isAssociationClass()
                         ? "ASSOCIATION_CLASS_OBJECT" : "OBJECT";
                 if (!expectedRole.equals(n.observationRole())
-                        || !o.stableId().equals(n.properties().get("objectKey"))
-                        || !o.stableId().equals(n.properties().get("use_id"))
+                        || !o.stableId().equals(n.properties().get(
+                                Uml2GraphEncodingContract.Property.OBJECT_KEY))
+                        || !o.stableId().equals(n.properties().get(
+                                Uml2GraphEncodingContract.Property.USE_ID))
                         || !n.labels().contains("Object")
                         || !n.labels().contains(simpleClassLabel(
                                 sm.clazz(o.dynamicClassKey()).qualifiedName()))) {
@@ -105,7 +115,8 @@ public final class ValidRepChecker {
             for (GraphModel.Node n : g.nodes()) {
                 if ("OBJECT".equals(n.observationRole())
                         || "ASSOCIATION_CLASS_OBJECT".equals(n.observationRole())) {
-                    String id = n.properties().get("objectKey");
+                    String id = n.properties().get(
+                            Uml2GraphEncodingContract.Property.OBJECT_KEY);
                     if (id == null || !graphIds.add(id)) {
                         return failure("VALIDREP_GHOST_OBJECT", "missing or duplicate graph object identity");
                     }
@@ -350,27 +361,42 @@ public final class ValidRepChecker {
             UmlAssociation association, GraphModel.Relationship relationship,
             boolean associationClass) {
         Map<String, String> properties = relationship.properties();
-        if (!(association.key().equals(properties.get("associationKey"))
-                && association.name().equals(properties.get("associationName"))
-                && association.sourceClassKey().equals(properties.get("sourceClassKey"))
-                && association.sourceRole().equals(properties.get("sourceRole"))
-                && String.valueOf(association.sourceLower()).equals(properties.get("sourceLower"))
-                && String.valueOf(association.sourceUpper()).equals(properties.get("sourceUpper"))
-                && association.targetClassKey().equals(properties.get("targetClassKey"))
-                && association.targetRole().equals(properties.get("targetRole"))
-                && String.valueOf(association.targetLower()).equals(properties.get("targetLower"))
-                && String.valueOf(association.targetUpper()).equals(properties.get("targetUpper"))
-                && String.valueOf(association.isOrdered()).equals(properties.get("ordered"))
-                && String.valueOf(association.isUnique()).equals(properties.get("unique"))
+        if (!(association.key().equals(properties.get(
+                        Uml2GraphEncodingContract.Property.ASSOCIATION_KEY))
+                && association.name().equals(properties.get(
+                        Uml2GraphEncodingContract.Property.ASSOCIATION_NAME))
+                && association.sourceClassKey().equals(properties.get(
+                        Uml2GraphEncodingContract.Property.SOURCE_CLASS_KEY))
+                && association.sourceRole().equals(properties.get(
+                        Uml2GraphEncodingContract.Property.SOURCE_ROLE))
+                && String.valueOf(association.sourceLower()).equals(properties.get(
+                        Uml2GraphEncodingContract.Property.SOURCE_LOWER))
+                && String.valueOf(association.sourceUpper()).equals(properties.get(
+                        Uml2GraphEncodingContract.Property.SOURCE_UPPER))
+                && association.targetClassKey().equals(properties.get(
+                        Uml2GraphEncodingContract.Property.TARGET_CLASS_KEY))
+                && association.targetRole().equals(properties.get(
+                        Uml2GraphEncodingContract.Property.TARGET_ROLE))
+                && String.valueOf(association.targetLower()).equals(properties.get(
+                        Uml2GraphEncodingContract.Property.TARGET_LOWER))
+                && String.valueOf(association.targetUpper()).equals(properties.get(
+                        Uml2GraphEncodingContract.Property.TARGET_UPPER))
+                && String.valueOf(association.isOrdered()).equals(properties.get(
+                        Uml2GraphEncodingContract.Property.ORDERED))
+                && String.valueOf(association.isUnique()).equals(properties.get(
+                        Uml2GraphEncodingContract.Property.UNIQUE))
                 && association.associationKind().name().equals(
-                        properties.get("associationKind"))
-                && association.qualifierEnd().name().equals(properties.get("qualifierEnd"))
+                        properties.get(Uml2GraphEncodingContract.Property.ASSOCIATION_KIND))
+                && association.qualifierEnd().name().equals(properties.get(
+                        Uml2GraphEncodingContract.Property.QUALIFIER_END))
                 && String.valueOf(association.sourceEndQualifiers().size())
-                        .equals(properties.get("sourceQualifierCount"))
+                        .equals(properties.get(
+                                Uml2GraphEncodingContract.Property.SOURCE_QUALIFIER_COUNT))
                 && String.valueOf(association.targetEndQualifiers().size())
-                        .equals(properties.get("targetQualifierCount"))
+                        .equals(properties.get(
+                                Uml2GraphEncodingContract.Property.TARGET_QUALIFIER_COUNT))
                 && String.valueOf(associationClass).equals(
-                        properties.get("isAssociationClass")))) {
+                        properties.get(Uml2GraphEncodingContract.Property.IS_ASSOCIATION_CLASS)))) {
             return false;
         }
         for (int index = 0; index < association.sourceEndQualifiers().size(); index++) {
@@ -545,13 +571,18 @@ public final class ValidRepChecker {
             if (!isBinaryLinkType(r.physicalType())) {
                 continue;
             }
-            UmlAssociation assoc = associationsByKey.get(r.properties().get("associationKey"));
+            UmlAssociation assoc = associationsByKey.get(r.properties().get(
+                    Uml2GraphEncodingContract.Property.ASSOCIATION_KEY));
             if (assoc == null
                     || !linkRelationshipType(assoc).equals(r.physicalType())
-                    || !r.stableKey().equals(r.properties().get("linkKey"))
-                    || !assoc.name().equals(r.properties().get("associationName"))
-                    || !assoc.sourceRole().equals(r.properties().get("sourceRole"))
-                    || !assoc.targetRole().equals(r.properties().get("targetRole"))) {
+                    || !r.stableKey().equals(r.properties().get(
+                            Uml2GraphEncodingContract.Property.LINK_KEY))
+                    || !assoc.name().equals(r.properties().get(
+                            Uml2GraphEncodingContract.Property.ASSOCIATION_NAME))
+                    || !assoc.sourceRole().equals(r.properties().get(
+                            Uml2GraphEncodingContract.Property.SOURCE_ROLE))
+                    || !assoc.targetRole().equals(r.properties().get(
+                            Uml2GraphEncodingContract.Property.TARGET_ROLE))) {
                 return failure("VALIDREP_LINK_METADATA", "link metadata differs: " + r.stableKey());
             }
             List<String> qualifiers = new ArrayList<>();
@@ -617,21 +648,32 @@ public final class ValidRepChecker {
             GraphModel.Relationship source, GraphModel.Relationship target) {
         Map<String, String> sourceProperties = source.properties();
         Map<String, String> targetProperties = target.properties();
-        String linkKey = sourceProperties.get("linkKey");
-        return association.key().equals(sourceProperties.get("associationKey"))
-                && association.key().equals(targetProperties.get("associationKey"))
-                && association.name().equals(sourceProperties.get("associationName"))
-                && association.name().equals(targetProperties.get("associationName"))
-                && association.sourceRole().equals(sourceProperties.get("sourceRole"))
-                && association.sourceRole().equals(targetProperties.get("sourceRole"))
-                && association.targetRole().equals(sourceProperties.get("targetRole"))
-                && association.targetRole().equals(targetProperties.get("targetRole"))
+        String linkKey = sourceProperties.get(Uml2GraphEncodingContract.Property.LINK_KEY);
+        return association.key().equals(sourceProperties.get(
+                        Uml2GraphEncodingContract.Property.ASSOCIATION_KEY))
+                && association.key().equals(targetProperties.get(
+                        Uml2GraphEncodingContract.Property.ASSOCIATION_KEY))
+                && association.name().equals(sourceProperties.get(
+                        Uml2GraphEncodingContract.Property.ASSOCIATION_NAME))
+                && association.name().equals(targetProperties.get(
+                        Uml2GraphEncodingContract.Property.ASSOCIATION_NAME))
+                && association.sourceRole().equals(sourceProperties.get(
+                        Uml2GraphEncodingContract.Property.SOURCE_ROLE))
+                && association.sourceRole().equals(targetProperties.get(
+                        Uml2GraphEncodingContract.Property.SOURCE_ROLE))
+                && association.targetRole().equals(sourceProperties.get(
+                        Uml2GraphEncodingContract.Property.TARGET_ROLE))
+                && association.targetRole().equals(targetProperties.get(
+                        Uml2GraphEncodingContract.Property.TARGET_ROLE))
                 && link.associationClassObjectStableId.equals(
-                        sourceProperties.get("associationClassObjectKey"))
+                        sourceProperties.get(
+                                Uml2GraphEncodingContract.Property.ASSOCIATION_CLASS_OBJECT_KEY))
                 && link.associationClassObjectStableId.equals(
-                        targetProperties.get("associationClassObjectKey"))
+                        targetProperties.get(
+                                Uml2GraphEncodingContract.Property.ASSOCIATION_CLASS_OBJECT_KEY))
                 && linkKey != null
-                && linkKey.equals(targetProperties.get("linkKey"))
+                && linkKey.equals(targetProperties.get(
+                        Uml2GraphEncodingContract.Property.LINK_KEY))
                 && GraphKey.of(source.modelKey(),
                         GraphKey.Kind.ASSOCIATION_CLASS_PARTICIPANT,
                         linkKey, "source").equals(source.stableKey())

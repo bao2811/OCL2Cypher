@@ -55,6 +55,43 @@ class UseSoilInputTest {
     }
 
     @Test
+    void preparedGraphCompilationKeepsTheSameCypher() throws Exception {
+        var loaded = UseSoilInput.load(example("shop-use-soil", "shop.use"),
+                example("shop-use-soil", "shop.soil"));
+        assertTrue(loaded.isSuccess(), () -> loaded.diagnostics().toString());
+        var graph = GraphBuilder.build(loaded.value().schema(), loaded.value().snapshot());
+        assertTrue(graph.isSuccess(), () -> graph.diagnostics().toString());
+        var dialect = org.uet.dse.ocl2cypher.cypher.CypherAst.Dialect.CYPHER_5;
+        var ordinary = ModelInputCompiler.compile(loaded.value(), "HasItems", dialect);
+        var reused = ModelInputCompiler.compile(loaded.value(), "HasItems", dialect,
+                graph.value());
+        assertTrue(ordinary.isSuccess(), () -> ordinary.diagnostics().toString());
+        assertTrue(reused.isSuccess(), () -> reused.diagnostics().toString());
+        assertEquals(ordinary.value().serializedCypher().cypherText(),
+                reused.value().serializedCypher().cypherText());
+    }
+
+    @Test
+    void requiresQualifiedNameWhenInvariantNamesAreAmbiguous() throws Exception {
+        Path use = example("families-to-persons-correctness-case-study/families",
+                "families.use");
+        Path soil = example("families-to-persons-correctness-case-study/families",
+                "families.soil");
+        var loaded = UseSoilInput.load(use, soil);
+        assertTrue(loaded.isSuccess(), () -> loaded.diagnostics().toString());
+
+        var ambiguous = ModelInputCompiler.compile(loaded.value(), "Named",
+                org.uet.dse.ocl2cypher.cypher.CypherAst.Dialect.CYPHER_5);
+        assertTrue(ambiguous.isFailure());
+        assertEquals("E_INVARIANT_AMBIGUOUS", ambiguous.primaryDiagnostic().code());
+
+        var qualified = ModelInputCompiler.compile(loaded.value(), "FamilyMember::Named",
+                org.uet.dse.ocl2cypher.cypher.CypherAst.Dialect.CYPHER_5);
+        assertTrue(qualified.isSuccess(), () -> qualified.diagnostics().toString());
+        assertEquals("FamilyMember", qualified.value().sourceInvariant().contextClassKey());
+    }
+
+    @Test
     void reportsMissingFilesAtTheInputBoundary() {
         var loaded = UseSoilInput.load(Path.of("missing.use"),
                 Path.of("missing.soil"));

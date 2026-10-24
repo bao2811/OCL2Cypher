@@ -48,9 +48,11 @@ public final class GraphBuilder {
         g.addNode(new GraphModel.Node(GraphKey.model(modelKey), modelKey,
                 modelNode.projection(), modelNode.observationRole(),
                 modelNode.labels(), Map.of(
-                        "modelKey", modelKey,
-                        "encodingProfile", GraphModel.ENCODING_PROFILE,
-                        "encodingVersion", GraphModel.ENCODING_VERSION)));
+                        Uml2GraphEncodingContract.Property.MODEL_KEY, modelKey,
+                        Uml2GraphEncodingContract.Property.ENCODING_PROFILE,
+                        GraphModel.ENCODING_PROFILE,
+                        Uml2GraphEncodingContract.Property.ENCODING_VERSION,
+                        GraphModel.ENCODING_VERSION)));
 
         // G_schema: classes, attribute declarations with MIME-controlled typing,
         // and generalization. The caller there relies solely on one closed
@@ -64,8 +66,8 @@ public final class GraphBuilder {
                     classBinding.declarationNode().projection(),
                     classBinding.declarationNode().observationRole(),
                     classBinding.declarationNode().labels(),
-                    Map.of("modelKey", modelKey,
-                            "classKey", c.key(),
+                    Map.of(Uml2GraphEncodingContract.Property.MODEL_KEY, modelKey,
+                            Uml2GraphEncodingContract.Property.CLASS_KEY, c.key(),
                             "qualifiedName", c.qualifiedName(),
                             "isAbstract", String.valueOf(c.isAbstract()),
                             "isAssociationClass", String.valueOf(c.isAssociationClass()))));
@@ -77,15 +79,16 @@ public final class GraphBuilder {
                                 c.key(), sup), modelKey,
                         generalization.projection(), generalization.physicalType(),
                         GraphKey.clazz(modelKey, c.key()), GraphKey.clazz(modelKey, sup),
-                        Map.of("modelKey", modelKey)));
+                        Map.of(Uml2GraphEncodingContract.Property.MODEL_KEY, modelKey)));
             }
             for (var attr : sm.ownAttributes(c.key())) {
                 var attribute = catalogue.attribute(attr.key());
                 var declarationNode = attribute.declarationNode();
                 g.addNode(new GraphModel.Node(GraphKey.attribute(modelKey, attr.key()), modelKey,
                         declarationNode.projection(), declarationNode.observationRole(),
-                        declarationNode.labels(), Map.of("modelKey", modelKey,
-                                "attributeKey", attr.key(),
+                        declarationNode.labels(), Map.of(
+                                Uml2GraphEncodingContract.Property.MODEL_KEY, modelKey,
+                                Uml2GraphEncodingContract.Property.ATTRIBUTE_KEY, attr.key(),
                                 "ownerClassKey", attr.ownerClassKey(),
                                 "name", attr.name(),
                                 "declaredType", attr.declaredType().toString())));
@@ -95,7 +98,8 @@ public final class GraphBuilder {
                         attribute.ownership().projection(),
                         attribute.ownership().physicalType(),
                         GraphKey.clazz(modelKey, c.key()),
-                        GraphKey.attribute(modelKey, attr.key()), Map.of("modelKey", modelKey)));
+                        GraphKey.attribute(modelKey, attr.key()), Map.of(
+                                Uml2GraphEncodingContract.Property.MODEL_KEY, modelKey)));
             }
         }
 
@@ -172,12 +176,13 @@ public final class GraphBuilder {
                                         + obj.stableId);
             }
             Map<String, String> objectProperties = new LinkedHashMap<>();
-            objectProperties.put("modelKey", modelKey);
-            objectProperties.put("objectKey", obj.stableId);
-            objectProperties.put("use_id", obj.stableId);
+            objectProperties.put(Uml2GraphEncodingContract.Property.MODEL_KEY, modelKey);
+            objectProperties.put(Uml2GraphEncodingContract.Property.OBJECT_KEY, obj.stableId);
+            objectProperties.put(Uml2GraphEncodingContract.Property.USE_ID, obj.stableId);
             objectProperties.put("stableKey", obj.stableId);
             if (associationClassObject) {
-                objectProperties.put("associationKey", obj.dynamicClassKey);
+                objectProperties.put(Uml2GraphEncodingContract.Property.ASSOCIATION_KEY,
+                        obj.dynamicClassKey);
             }
             var objectNode = catalogue.clazz(obj.dynamicClassKey).objectNode();
             List<String> objectLabels = new ArrayList<>(objectNode.labels());
@@ -195,7 +200,7 @@ public final class GraphBuilder {
                             obj.stableId), modelKey,
                     objectTyping.projection(), objectTyping.physicalType(),
                     nodeKey, GraphKey.clazz(modelKey, obj.dynamicClassKey),
-                    Map.of("modelKey", modelKey)));
+                    Map.of(Uml2GraphEncodingContract.Property.MODEL_KEY, modelKey)));
             mu.put(obj.stableId, nodeKey);
         }
         for (var obj : sn.objects()) {
@@ -216,9 +221,9 @@ public final class GraphBuilder {
                     return Result.failure(Stage.F_G, e.code(), e.getMessage());
                 }
                 Map<String, String> slotProperties = new LinkedHashMap<>();
-                slotProperties.put("modelKey", modelKey);
-                slotProperties.put("slotKey", slotKey);
-                slotProperties.put("attributeKey", attr.key());
+                slotProperties.put(Uml2GraphEncodingContract.Property.MODEL_KEY, modelKey);
+                slotProperties.put(Uml2GraphEncodingContract.Property.SLOT_KEY, slotKey);
+                slotProperties.put(Uml2GraphEncodingContract.Property.ATTRIBUTE_KEY, attr.key());
                 slotProperties.put(GraphValueCodec.VALUE_STATE, encoded.state());
                 slotProperties.put(GraphValueCodec.VALUE_TYPE, encoded.typeTag());
                 slotProperties.put(GraphValueCodec.CODEC_ID, encoded.codecId());
@@ -235,14 +240,15 @@ public final class GraphBuilder {
                                 obj.stableId, attr.key()), modelKey,
                         attribute.slotOwnership().projection(),
                         attribute.slotOwnership().physicalType(),
-                        objKey, slotKey, Map.of("modelKey", modelKey)));
+                        objKey, slotKey, Map.of(
+                                Uml2GraphEncodingContract.Property.MODEL_KEY, modelKey)));
                 g.addRelationship(new GraphModel.Relationship(
                         GraphKey.of(modelKey, GraphKey.Kind.SLOT_TYPING,
                                 obj.stableId, attr.key()), modelKey,
                         attribute.slotTyping().projection(),
                         attribute.slotTyping().physicalType(),
                         slotKey, GraphKey.attribute(modelKey, attr.key()),
-                        Map.of("modelKey", modelKey)));
+                        Map.of(Uml2GraphEncodingContract.Property.MODEL_KEY, modelKey)));
             }
         }
         // Resolve and canonically order links before assigning graph keys.  A
@@ -308,12 +314,12 @@ public final class GraphBuilder {
             String linkKey = GraphKey.of(modelKey, GraphKey.Kind.LINK,
                     tuple, String.valueOf(occurrence));
             Map<String, String> linkProps = new LinkedHashMap<>();
-            linkProps.put("associationKey", assoc.key());
-            linkProps.put("associationName", assoc.name());
-            linkProps.put("sourceRole", assoc.sourceRole());
-            linkProps.put("targetRole", assoc.targetRole());
-            linkProps.put("linkKey", linkKey);
-            linkProps.put("modelKey", modelKey);
+            linkProps.put(Uml2GraphEncodingContract.Property.ASSOCIATION_KEY, assoc.key());
+            linkProps.put(Uml2GraphEncodingContract.Property.ASSOCIATION_NAME, assoc.name());
+            linkProps.put(Uml2GraphEncodingContract.Property.SOURCE_ROLE, assoc.sourceRole());
+            linkProps.put(Uml2GraphEncodingContract.Property.TARGET_ROLE, assoc.targetRole());
+            linkProps.put(Uml2GraphEncodingContract.Property.LINK_KEY, linkKey);
+            linkProps.put(Uml2GraphEncodingContract.Property.MODEL_KEY, modelKey);
             for (var qualifier : associationBinding.qualifiers()) {
                 List<String> payloads = qualifier.end()
                         == org.uet.dse.ocl2cypher.source.model.UmlAssociation.QualifierEnd.SOURCE
@@ -335,7 +341,8 @@ public final class GraphBuilder {
                             "association-class link requires an object of " + assoc.key());
                 }
                 String occurrenceKey = mu.get(occurrenceId);
-                linkProps.put("associationClassObjectKey", occurrenceId);
+                linkProps.put(Uml2GraphEncodingContract.Property.ASSOCIATION_CLASS_OBJECT_KEY,
+                        occurrenceId);
                 g.addRelationship(new GraphModel.Relationship(
                         GraphKey.of(modelKey,
                                 GraphKey.Kind.ASSOCIATION_CLASS_PARTICIPANT,
@@ -361,17 +368,10 @@ public final class GraphBuilder {
                         linkProps));
             }
         }
-        for (var n : g.nodes()) {
-            if (!n.properties().containsKey("modelKey")) {
-                return Result.failure(Stage.F_G, "G_MISSING_MODEL_SCOPE",
-                        "no modelKey on node " + n.stableKey());
-            }
-        }
-        for (var r : g.relationships()) {
-            if (!r.properties().containsKey("modelKey")) {
-                return Result.failure(Stage.F_G, "G_MISSING_MODEL_SCOPE",
-                        "no modelKey on relationship " + r.stableKey());
-            }
+        Result<Uml2GraphEncodingContract.Witness> contract =
+                Uml2GraphEncodingContract.validate(g);
+        if (contract.isFailure()) {
+            return Result.failure(contract.primaryDiagnostic());
         }
 
         Result<ValidRepChecker.Witness> valid = ValidRepChecker.check(sm, sn, g);
@@ -428,26 +428,37 @@ public final class GraphBuilder {
             org.uet.dse.ocl2cypher.source.model.UmlAssociation association,
             boolean associationClass) {
         Map<String, String> properties = new LinkedHashMap<>();
-        properties.put("modelKey", modelKey);
-        properties.put("associationKey", association.key());
-        properties.put("associationName", association.name());
-        properties.put("associationKind", association.associationKind().name());
-        properties.put("sourceClassKey", association.sourceClassKey());
-        properties.put("sourceRole", association.sourceRole());
-        properties.put("sourceLower", String.valueOf(association.sourceLower()));
-        properties.put("sourceUpper", String.valueOf(association.sourceUpper()));
-        properties.put("targetClassKey", association.targetClassKey());
-        properties.put("targetRole", association.targetRole());
-        properties.put("targetLower", String.valueOf(association.targetLower()));
-        properties.put("targetUpper", String.valueOf(association.targetUpper()));
-        properties.put("ordered", String.valueOf(association.isOrdered()));
-        properties.put("unique", String.valueOf(association.isUnique()));
-        properties.put("qualifierEnd", association.qualifierEnd().name());
-        properties.put("sourceQualifierCount",
+        properties.put(Uml2GraphEncodingContract.Property.MODEL_KEY, modelKey);
+        properties.put(Uml2GraphEncodingContract.Property.ASSOCIATION_KEY, association.key());
+        properties.put(Uml2GraphEncodingContract.Property.ASSOCIATION_NAME, association.name());
+        properties.put(Uml2GraphEncodingContract.Property.ASSOCIATION_KIND,
+                association.associationKind().name());
+        properties.put(Uml2GraphEncodingContract.Property.SOURCE_CLASS_KEY,
+                association.sourceClassKey());
+        properties.put(Uml2GraphEncodingContract.Property.SOURCE_ROLE, association.sourceRole());
+        properties.put(Uml2GraphEncodingContract.Property.SOURCE_LOWER,
+                String.valueOf(association.sourceLower()));
+        properties.put(Uml2GraphEncodingContract.Property.SOURCE_UPPER,
+                String.valueOf(association.sourceUpper()));
+        properties.put(Uml2GraphEncodingContract.Property.TARGET_CLASS_KEY,
+                association.targetClassKey());
+        properties.put(Uml2GraphEncodingContract.Property.TARGET_ROLE, association.targetRole());
+        properties.put(Uml2GraphEncodingContract.Property.TARGET_LOWER,
+                String.valueOf(association.targetLower()));
+        properties.put(Uml2GraphEncodingContract.Property.TARGET_UPPER,
+                String.valueOf(association.targetUpper()));
+        properties.put(Uml2GraphEncodingContract.Property.ORDERED,
+                String.valueOf(association.isOrdered()));
+        properties.put(Uml2GraphEncodingContract.Property.UNIQUE,
+                String.valueOf(association.isUnique()));
+        properties.put(Uml2GraphEncodingContract.Property.QUALIFIER_END,
+                association.qualifierEnd().name());
+        properties.put(Uml2GraphEncodingContract.Property.SOURCE_QUALIFIER_COUNT,
                 String.valueOf(association.sourceEndQualifiers().size()));
-        properties.put("targetQualifierCount",
+        properties.put(Uml2GraphEncodingContract.Property.TARGET_QUALIFIER_COUNT,
                 String.valueOf(association.targetEndQualifiers().size()));
-        properties.put("isAssociationClass", String.valueOf(associationClass));
+        properties.put(Uml2GraphEncodingContract.Property.IS_ASSOCIATION_CLASS,
+                String.valueOf(associationClass));
         for (int index = 0; index < association.sourceEndQualifiers().size(); index++) {
             var qualifier = association.sourceEndQualifiers().get(index);
             properties.put("sourceQualifier::" + index + "::name", qualifier.name());

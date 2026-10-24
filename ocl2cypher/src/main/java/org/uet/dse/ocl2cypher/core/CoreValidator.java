@@ -324,6 +324,7 @@ public final class CoreValidator {
         boolean valid = switch (node.operator) {
             case BOOLEAN_NOT -> operand.equals(OclType.BOOLEAN)
                     && node.type().equals(OclType.BOOLEAN);
+            case OCL_IS_UNDEFINED -> node.type().equals(OclType.BOOLEAN);
             case NUMERIC_NEGATE, NUMERIC_ABS -> operand.isNumeric()
                     && node.type().equals(operand);
             case REAL_FLOOR, REAL_ROUND -> operand.equals(OclType.REAL)
