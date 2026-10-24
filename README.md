@@ -317,13 +317,39 @@ Set-Location ../..
 ./verification/scripts/check-implementation-conformance.ps1
 ```
 
-Normative and research documentation:
+Versioned documentation:
 
-- [Representation and compilation specification](specification/README.md)
 - [Proof and evidence status](verification/README.md)
-- [Experimental protocol](experiments/README.md)
-- [Full technical report](research/SOICT_conf/fulltechreport)
-- [Main paper](research/SOICT_conf/Paper_formal_EN)
+- [Experimental protocol](ocl2cypher/EXPERIMENT.adoc)
+
+### SOICT 2026 violation-set corpus
+
+The eight USE/SOIL inputs behind the manuscript's violation-set table are
+Git-tracked under [`example/`](example/), with one snapshot per subject:
+
+| Subject | USE model | SOIL snapshot | Invariant source |
+|---|---|---|---|
+| Shop | [`shop.use`](example/shop-use-soil/shop.use) | [`shop.soil`](example/shop-use-soil/shop.soil) | In the USE model |
+| Advanced adapters | [`advanced.use`](example/advanced-adapters/advanced.use) | [`advanced.soil`](example/advanced-adapters/advanced.soil) | In the USE model |
+| Company | [`company.use`](example/ocl2cypher-correctness-case-study/company.use) | [`company.soil`](example/ocl2cypher-correctness-case-study/company.soil) | [`invariants.ocl`](example/ocl2cypher-correctness-case-study/invariants.ocl) |
+| Comprehensive | [`comprehensive.use`](example/uml-ocl-comprehensive-case-study/comprehensive.use) | [`comprehensive.soil`](example/uml-ocl-comprehensive-case-study/comprehensive.soil) | [`invariants.ocl`](example/uml-ocl-comprehensive-case-study/invariants.ocl) |
+| Medical | [`medical.use`](example/medical/medical.use) | [`medical.soil`](example/medical/medical.soil) | [`invariants.ocl`](example/medical/invariants.ocl) |
+| CarRental | [`carrentalmodel.use`](example/carrental/umlmm/carrentalmodel.use) | [`carrental-experiment.soil`](example/carrental/umlmm/carrental-experiment.soil) | [`invariants-extended.ocl`](example/carrental/umlmm/invariants-extended.ocl) |
+| Families | [`families.use`](example/families-to-persons-correctness-case-study/families/families.use) | [`families.soil`](example/families-to-persons-correctness-case-study/families/families.soil) | In the USE model |
+| Persons | [`persons.use`](example/families-to-persons-correctness-case-study/persons/persons.use) | [`persons.soil`](example/families-to-persons-correctness-case-study/persons/persons.soil) | [`invariants.ocl`](example/families-to-persons-correctness-case-study/persons/invariants.ocl) |
+
+The manuscript's 63/79 in-fragment/out-of-fragment split is an
+invariant-level classification, not the Java plugin's admission count. The
+[classification CSV](example/soict2026-fragment-classification.csv),
+[audit notes](example/soict2026-fragment-classification.md),
+[Java corpus runner](ocl2cypher/src/test/java/org/uet/dse/ocl2cypher/experiment/ExampleCorpusExperimentIT.java),
+and [run script](ocl2cypher/scripts/Run-ExampleCorpusExperiment.ps1) are
+Git-tracked. Generated Neo4j results under `ocl2cypher/target/experiments/`
+are not tracked; reproducing the reported live comparison requires rerunning
+the experiment with USE and Neo4j.
+
+Manuscript sources under `research/SOICT_conf/` are local to the authoring
+workspace and are not included in the versioned replication package.
 
 The correctness chain is:
 
@@ -341,12 +367,11 @@ source OCL
 |---|---|---|
 | Production plugin | [`ocl2cypher/src/main`](ocl2cypher/src/main) | Frontend, Core/Q IR, graph builder, Cypher generation, and execution |
 | Tests | [`ocl2cypher/src/test`](ocl2cypher/src/test) | Conformance, differential, rejection, UI, and Neo4j tests |
-| Specification | [`specification`](specification) | Representation, OCL core, Q target, and proof obligations |
 | Formal proofs | [`verification/lean`](verification/lean) | Lean definitions and preservation results |
+| Paper Isabelle session | [`Isabelle-HolIsL`](Isabelle-HolIsL) | Isabelle/HOL abstract graph-query proof in the versioned Git submodule |
 | Evidence | [`verification`](verification) | Contracts, coverage, evidence, and runtime obligations |
-| Experiments | [`experiments`](experiments) | Research questions, corpus, commands, and results |
+| Experiments | [`ocl2cypher/EXPERIMENT.adoc`](ocl2cypher/EXPERIMENT.adoc) | Research questions, corpus, commands, and generated-result format |
 | OCL2Cypher examples | [`example`](example) | Models, snapshots, constraints, and expected results |
-| Manuscripts | [`research/SOICT_conf`](research/SOICT_conf) | Main paper and full technical report |
 
 For reproducible experimental reports, record the commit, tool versions, Neo4j
 configuration, command line, and output directory. Do not overwrite reviewed
